@@ -1,0 +1,94 @@
+<!--wenxiaod 2020-02-17 创建-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入element-ui样式 -->
+    <link rel="stylesheet" href="./css/element-ui.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <title>数字管廊综合管理系统</title>
+</head>
+
+<body>
+    <div class="app-container">
+        <el-container v-cloak>
+            <el-header class="mn-header" height="">
+                <el-row class="autoHeight">
+                    <table class="float-lt autoWidth autoHeight">
+                        <tr>
+                            <td class="left">
+                                <img class="logo" src="./images/top_left_icon.png" />
+                            </td>
+                            <td class="middle"></td>
+                            <td class="middle2"></td>
+                            <td class="right">
+                                <el-row class="autoHeight" type="flex" justify="end">
+                                    <el-row class="autoHeight sysMenu" type="flex" align="middle">
+                                        <el-dropdown class="sysUser">
+                                            <el-row type="flex" align="middle" class="el-dropdown-link">
+                                                <img src="./images/user_icon.png" /> {{user.name}} <i class="el-icon-arrow-down el-icon--right"></i>
+                                            </el-row>
+                                            <el-dropdown-menu slot="dropdown">
+                                                <el-dropdown-item>
+                                                    <el-link v-on:click.stop="fullScreen" class="fullScreen">全屏显示</el-link>
+                                                </el-dropdown-item>
+                                                <el-dropdown-item>
+                                                    <el-link v-on:click.stop="exitFullScreen" class="fullScreen">退出全屏</el-link>
+                                                </el-dropdown-item>
+
+                                            </el-dropdown-menu>
+                                        </el-dropdown>
+                                    </el-row>
+                                    <el-row class="autoHeight sysMenu" type="flex" align="middle">
+                                        <el-tooltip content="注销用户" placement="top">
+                                            <img v-on:click.stop="exitSystem" src="./images/exit.png" class="hand exitSystem" />
+                                        </el-tooltip>
+
+                                    </el-row>
+                                </el-row>
+                            </td>
+                        </tr>
+                    </table>
+                    <el-row class="navs autoWidth autoHeight">
+                        <el-row class="navContainer autoWidth autoHeight" type="flex" justify="start" align="middle">
+                            <el-link v-on:click.stop="jump(nav)" :class="[curNav == nav ? 'navStyle is-select':'navStyle']" v-for="(nav,i) in navs" :key="i">{{nav.name}}</el-link>
+                            <el-link :class="[dailyNavs.includes(curNav) ? 'navStyle is-select':'navStyle']">
+                                <el-dropdown placement="bottom">
+                                    <span class="el-dropdown-link">
+                                        日常管理 <i class="el-icon-arrow-down el-icon--right"></i>
+                                    </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item v-for="(nav,i) in dailyNavs" :key="i">
+                                            <el-link :target="nav.target" :href="nav.path" class="navStyle" v-if="nav.target">
+                                                {{nav.name}}
+                                            </el-link>
+                                            <el-link v-on:click.stop="jump(nav)" class="navStyle" v-else>
+                                                {{nav.name}}
+                                            </el-link>
+                                        </el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                            </el-link>
+                        </el-row>
+                    </el-row>
+                </el-row>
+            </el-header>
+            <el-main class="mn-main">
+                <div class="bg"></div>
+                <!-- 内容区 -->
+                <iframe :class="[curNav.showHead?'':'remove-head']" :src="curNav.query?curNav.path+curNav.query:curNav.path" :key="curNav.query?curNav.path+curNav.query:curNav.path" v-if="curNav"></iframe>
+            </el-main>
+        </el-container>
+    </div>
+
+    <!--脚本-->
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <!-- 引入vue组件库 -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入element-ui组件库 -->
+    <script src="./js/element-ui.js"></script>
+    <script src="./js/home.js"></script>
+</body>
+
+</html>
