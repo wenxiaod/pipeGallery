@@ -1,240 +1,1571 @@
 <!DOCTYPE html>
-<html style="width:100%">
+<html>
 
-<head lang="en">
-    <meta name="viewport" content="width=device-width" />
+<head>
+    <meta charset="utf-8">
+    <title>巡检系统</title>
+    <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-    <title>数字管廊综合管理系统</title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet" />
-    <link type="image/x-icon" rel="Icon" href="./images/favicon.ico" />
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="stylesheet" href="./css/menu.css" />
-    <link rel="stylesheet" href="./css/show.css" />
-    <!-- <link href="Style/main/index.css" rel="stylesheet" />
-    <link href="Style/main/menu.css" rel="stylesheet" />
-    <link href="Style/main/show.css" rel="stylesheet" /> -->
-
-    <link type="text/css" rel="Stylesheet" href="./css/reset.css" />
-    <link type="text/css" rel="Stylesheet" href="./css/common.css" />
-    <link type="text/css" rel="Stylesheet" href="./css/layout.css" />
-    <!-- <link type="text/css" rel="Stylesheet" href="Style/page_fn.css?ver=1.1.0" /> -->
-    <link type="text/css" href="./css/select2.min.css" rel="stylesheet" />
-    <!-- <link type="text/css" rel="Stylesheet" href="Style/page_main.css?ver=1.1.0" /> -->
-
-    <link href="./css/exchange.css" rel="stylesheet" />
-    <link href="./css/select2.override.css" rel="stylesheet" />
-    <!--CSS-->
-    <link href="./css/style.css" id="cssfile" rel="stylesheet" />
-
-    <link href="./css/layer.css" rel="stylesheet" />
-    <link href="./css/font-awesome.min.css" rel="stylesheet" />
-    <link href="./css/inspectionSystem.css" rel="stylesheet">
-
-
-    <!--JQ-->
-    <script src="./js/jquery-3.4.1.min.js" type="text/javascript"></script>
-    <script src="./js/jquery-ui.min.js"></script>
-    <script src="./js/jquery.cookies.2.1.0.js"></script>
-    <!--BootStrap-->
-
-    <script src="./js/bootstrap.min.js"></script>
-    <!--layer-->
-    <script src="./js/layer.min.js" type="text/javascript"></script>
-
-
-
-
-    <script src="./js/common.js" type="text/javascript"></script>
-    <!--图标-->
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="./layui/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="./css/style1.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="https://raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" />
+    <script src="./layui/layui/lay/modules/layer.js"></script>
+    <script src="./js/vue.js"></script>
+    <script src="./js/echarts.js"></script>
 </head>
 
-<body style="height: 100%; min-height: 100%;">
-    <div class="downBox" style="position:absolute;top:60px;left:0;bottom:0;width:100%">
-        <div style="margin: 0;width: 100%;height: 100%;position:relative">
+<body style="background: #ffffff;">
 
-            <!--中间内容盒子-->
-            <div id="Right-box" style="height: 108%;">
-                <iframe src="./pages/index.html" name="mainframe" style="border: none;width:100%;height:100%;" id="only-frame"></iframe>
+    <!-- *****左侧导航***** -->
+    <div class="leftNav" id="leftNav">
+        <div class="imgSwitch" id="imgSwitch" style="left: 10px;top: 40%;">
+            <img @click="imgSwitch()" src="../../images/收起.png" alt="">
+        </div>
+        <ul v-show="imgSwitchStore" class="layui-nav layui-nav-tree" lay-filter="test">
+            <!-- 收起菜单按钮 -->
+            <div class="imgSwitch" id="imgSwitch">
+                <img @click="imgSwitch()" src="../../images/收起.png" alt="">
+            </div>
+            <!-- 0系统首页 -->
+            <li class="layui-nav-item layui-nav-itemed"><a href="">系统首页</a></li>
+            <!-- 1隐患管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">隐患管理</a>
+                <dl class="layui-nav-child" id="btn1">
+                    <button class="layui-btn site-demo-active" data-type="tabChange11" id="btn11">隐患上报</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange12">隐患查询</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange13">责任区域</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange14">隐患类型</button><br>
+                </dl>
+            </li>
+            <!-- 2分组管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">分组管理</a>
+                <dl class="layui-nav-child" id="btn2">
+                    <button class="layui-btn site-demo-active" data-type="tabChange21">添加分组</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange22">班组管理</button><br>
+
+                </dl>
+            </li>
+            <!-- 3巡点管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">巡点管理</a>
+                <dl class="layui-nav-child" id="btn3">
+                    <button class="layui-btn site-demo-active" style="margin: -0.4px 0;" data-type="tabChange31">新增巡检点</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange32">巡检点查询</button><br>
+                </dl>
+            </li>
+            <!-- 4工作日志 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">工作日志</a>
+                <dl class="layui-nav-child" id="btn4">
+                    <button class="layui-btn site-demo-active" data-type="tabChange41">班组日志</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange42">填写工作日志</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange43">工作日志</button><br>
+                </dl>
+            </li>
+            <!-- 5任务管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">任务管理</a>
+                <dl class="layui-nav-child" id="btn5">
+                    <button class="layui-btn site-demo-active" data-type="tabChange51">任务指派</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange52">任务查询</button><br>
+                </dl>
+            </li>
+            <!-- 6指标管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">指标管理</a>
+                <dl class="layui-nav-child" id="btn6">
+                    <button class="layui-btn site-demo-active" style="margin: -0.3px 0;" data-type="tabChange61">指标管理</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange62">类型管理</button><br>
+                </dl>
+            </li>
+            <!-- 7线路管理 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">线路管理</a>
+                <dl class="layui-nav-child" id="btn7">
+                    <button class="layui-btn site-demo-active" data-type="tabChange71">线路管理</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange72">线路新增</button><br>
+                </dl>
+            </li>
+            <!-- 8统计分析 -->
+            <li class="layui-nav-item">
+                <a href="javascript:;">统计分析</a>
+                <dl class="layui-nav-child" id="btn8">
+                    <button class="layui-btn site-demo-active" data-type="tabChange81">巡检考核评估</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange82">巡检日历报表</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange83">隐患类型分析</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange84">隐患区域分析</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange85">隐患数量分析</button><br>
+                </dl>
+            </li>
+        </ul>
+        <!-- id编号 -->
+        <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+            <ul class="layui-tab-title" style="display: none;">
+                <li class="layui-this" lay-id="11">隐患上报</li>
+                <li lay-id="12">隐患查询</li>
+                <li lay-id="13">责任区域</li>
+                <li lay-id="14">隐患类型</li>
+                <li lay-id="21">添加分组</li>
+                <li lay-id="22">班组管理</li>
+                <li lay-id="31">新增巡检点</li>
+                <li lay-id="32">巡检点查询</li>
+                <li lay-id="41">班组日志</li>
+                <li lay-id="42">填写工作日志</li>
+                <li lay-id="43">工作日志</li>
+                <li lay-id="51">任务指派</li>
+                <li lay-id="52">任务查询</li>
+                <li lay-id="61">指标管理</li>
+                <li lay-id="62">添加分组</li>
+                <li lay-id="71">线路管理</li>
+                <li lay-id="72">线路新增</li>
+                <li lay-id="81">巡检考核评估</li>
+                <li lay-id="82">巡检日历报表</li>
+                <li lay-id="83">隐患类型分析</li>
+                <li lay-id="84">隐患区域分析</li>
+                <li lay-id="85">隐患数量分析</li>
+            </ul>
+            <!-- 内容显示区 -->
+            <div class="tabContent layui-tab-content">
+                <!-- 系统首页内容区 -->
+                <div id="mainPage">
+                    <!-- 功能按钮 -->
+                    <div class="functionBtn">
+                        <button>功能按钮</button>
+                        <button>功能按钮</button>
+                        <button>功能按钮</button>
+                        <button>功能按钮</button>
+                        <button>功能按钮</button>
+                    </div>
+                    <iframe src="./pages/Map.html" frameborder="0" style="width: 101%;height: 890px;"></iframe>
+                </div>
+                <!-- 隐患上报---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【上报流程】发现隐患 → 及时上报 → 调度处理 → 新分配工单 → 接收/处理工单 → 完成工单→ 填写工单处理报告</p>
+                        <p style="color: red">【说明】整个流程图指派人或调度中心可实时查询到工单处理进度或完成情况</p>
+                        <p>【注】点击工单【详细】看到工单的处理流程</p>
+                    </div>
+                    <div class="container-fluid row ">
+                        <form id="inspectionTaskForm" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">隐患标题：</label>
+                                    <div class="layui-input-block" style="height: 10px">
+                                        <input type="text" name="title" required lay-verify="required" style="width: 300px;" placeholder="请输入隐患标题..." autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">隐患类型：</label>
+                                    <div class="layui-input-block " style="width: 300px">
+                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>--请选择--</option>
+                                            <option value="管道泄漏">管道泄漏</option>
+                                            <option value="管道腐蚀">管道腐蚀</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">区域(管廊)：</label>
+                                    <div class="layui-input-block " style="width: 300px">
+                                        <select id="tubearea" name="tubearea" lay-verify="required" lay-filter="select_id">
+                                            <option>--请选择--</option>
+                                            <option value="管道泄漏">管道泄漏</option>
+                                            <option value="管道腐蚀">管道腐蚀</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">区域(管轴)：</label>
+                                    <div class="layui-input-block " style="width: 300px">
+                                        <select id="axisarea" name="axisarea" lay-verify="required" lay-filter="select_id">
+                                            <option>--请选择--</option>
+                                            <option value="管道泄漏">管道泄漏</option>
+                                            <option value="管道腐蚀">管道腐蚀</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">风险等级：</label>
+                                    <div class="layui-input-block " style="width: 300px">
+                                        <select id="level" name="level" lay-verify="required" lay-filter="select_id">
+                                            <option value="I">I</option>
+                                            <option value="II">III</option>
+                                            <option value="III">IIII</option>
+    
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">纬度：</label>
+                                    <input type="text" id="latitude" name="latitude" required lay-verify="required" style="width: 180px" class="layui-input" readonly="readonly" value="00.0000">
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">经度：</label>
+                                    <input type="text" id="longitude" name="longitude" required lay-verify="required" style="width: 180px" class="layui-input" readonly="readonly" value="00.0000">
+                                </div>
+                                <div class="layui-inline" style="width: 15%;">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="mapChoose"><i class="layui-icon">&#xe715;</i>地图选点</button>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">内容：</label>
+                                    <textarea cols="87" rows="6" id="text" class="SpanHeight">正常时应该是:
+    异常：
+    预估：
+    隐患程度：
+    建议处理方式：
+                                    </textarea>
+
+
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">上传图片：</label>
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn layui-btn-normal" id="pictureYHSB" style="width: 15%;"><i class="layui-icon">&#xe64a;</i>选择</button>
+                                    <div class="layui-upload-list">
+                                        <img class="layui-upload-img" id="demo1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">上传视频：</label>
+                                <button type="button" class="layui-btn layui-btn-normal" id="videoYHSB" style="width: 15%;"><i class="layui-icon">&#xe6ed;</i>选择</button>
+                            </div>
+
+                            <div class="layui-form-item" style="margin-left: 100px;margin-top:50px">
+                                <div class="layui-input-block" style="margin-left:20%">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo" style="width: 80px">保存</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 100px;width: 80px">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- 隐患上报---------内容区 -->
+                </div>
+                <!-- 隐患查询---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【搜索】根据隐患类型，隐患上报时间选择时间范围进行查询</p>
+                        <p>【描述】鼠标放于隐患描述位置或<span style="color: red">点击【详细】</span>可以查看工单的具体内容描述信息</p>
+                        <p>【查看大图】默认显示的是上报图片的缩略图，点击图片，可以查看原始隐患上报图片</p>
+                        <p style="color: red">【说明】管理人员可以通过巡检人员上报的隐患，派另外的巡检人员去进行故障排除</p>
+                    </div>
+                    <div class="container-fluid row " style="justify-content: center;display: flex;">
+                        <form id="inspectionTaskForm" class="layui-form">
+                            <div class="layui-form-item" style="margin: auto">
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">隐患标题：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" required lay-verify="required" style="width:99%;" placeholder="输入隐患标题" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label">隐患类型：</label>
+                                    <div class="layui-input-block ">
+                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="管道泄漏">管道泄漏</option>
+                                            <option value="管道腐蚀">管道腐蚀</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto;">
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label">整改状态：</label>
+                                    <div class="layui-input-block ">
+                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="整改中">整改中</option>
+                                            <option value="已整改">已整改</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label">应急审核：</label>
+                                    <div class="layui-input-block ">
+                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="管道泄漏">未审核</option>
+                                            <option value="管道腐蚀">应急未通过</option>
+                                            <option value="管道泄漏">应急完成</option>
+                                            <option value="管道腐蚀">未通过</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin: auto;">
+                                    <div class="layui-inline" style="width: 48%">
+                                        <label class="layui-form-label">上报人：</label>
+                                        <div class="layui-input-block ">
+                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="张一鸣">张一鸣</option>
+                                            <option value="石家宝">石家宝</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%">
+                                        <label class="layui-form-label messageForm">区域负责人：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required lay-verify="required" style="width:99%;" placeholder="输入区域负责人" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin: auto;">
+                                    <div class="layui-inline" style="width: 48%">
+                                        <label class="layui-form-label messageForm">管廊：</label>
+                                        <input type="text" name="title" placeholder="输入管轴" class="layui-input" style="width: 28%"><i class="layui-icon" style="position: relative;top: -25px;left: 64%;">&#xe67e;</i>
+                                        <input type="text" name="title" style="position: relative;width:28%;top: -54px;left: 72%;" placeholder="输入管轴" class="layui-input">
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%">
+                                        <label class="layui-form-label messageForm">上报时间：</label>
+                                        <input type="text" class="layui-input" id="timeStart" placeholder="yyyy-MM-dd" style="width: 28%">
+                                        <i class="layui-icon" style="position: relative;top: -25px;left: 64%;">&#xe67e;</i>
+                                        <input type="text" class="layui-input" id="timeEnd" placeholder="yyyy-MM-dd" style="position: relative;width:28%;top: -54px;left: 72%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div style="position: relative">
+                            <button type="button" class="layui-btn" style=" position: relative;left:300%;top:81%">搜索</button>
+                            <button type="button" class="layui-btn" style=" position: relative;left:400%;top:64%">导出</button>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="layui-hide" id="demoYHCX"></table>
+                    </div>
+                    <!-- 隐患查询---------内容区 -->
+                </div>
+                <!-- 责任区域---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="zerendiv" style="height: 175px;">
+                        <div style="margin-left: 5%;margin-top: 1%">查询条件</div>
+                        <div class="container-fluid row " style="justify-content: center;display: flex;padding: 0;">
+                            <form id="inspectionTaskForm" class="layui-form">
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm">管廊：</label>
+                                        <div class="layui-input-block" style="height: 10px">
+                                            <input type="text" name="title" required lay-verify="required" placeholder="输入管廊" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm">管轴：</label>
+                                        <div class="layui-input-block" style="height: 10px">
+                                            <input type="text" name="title" required lay-verify="required" placeholder="输入管轴" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin: 0;">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm">负责人：</label>
+                                        <div class="layui-input-block" style="height: 10px;min-height: 0;">
+                                            <input type="text" name="title" required lay-verify="required" placeholder="输入负责人" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm">账号：</label>
+                                        <div class="layui-input-block" style="height: 10px;min-height: 0;">
+                                            <input type="text" name="title" required lay-verify="required" placeholder="输入账号" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="position: relative;margin: 0;">
+                                        <button type="button" class="layui-btn" style="position: relative;right: -100%; top: 50px;">搜索</button>
+                                        <button type="button" class="layui-btn" style="position: relative;right: -210%; top: 13px;">导出</button>
+                                        <button type="button" class="layui-btn" style="position: relative;right: -330%;top: -24px;">导入</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="layui-hide" id="demoZRQY"></table>
+                    </div>
+                    <!-- 责任区域---------内容区 -->
+                </div>
+                <!-- 隐患类型---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【新增】输入的隐患类型名称创建对应的隐患类型</p>
+                        <p style="color: red">【删除】管理人员可以删除对应的隐患类型</p>
+                    </div>
+                    <table style="margin-top: 1%">
+                        <tr>
+                            <td><label class="layui-form-label messageForm">添加隐患类型：</label></td>
+                            <td><input type="text" name="title" required lay-verify="required" placeholder="输入管廊" autocomplete="off" class="layui-input"></td>
+                            <td><button type="button" class="layui-btn" style="width: 50px;margin: 0;">新增</button></td>
+                        </tr>
+                    </table>
+
+                    <div>
+                        <table class="layui-hide" id="demoYHLX"></table>
+                    </div>
+                    <!-- 隐患类型---------内容区 -->
+                </div>
+                <!-- 添加分组---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【班组名称】该巡检组的名称</p>
+                        <p>【父级目录】表示该巡检组是否有上级父类目录，如果有请选择，默认为顶级目录</p>
+                        <p>【筛选组员】如果可选组员太多，则可以通过输入用户名的一部分进行筛选</p>
+                        <p style="color: red">【注】默认组长为【已选人员列表】的第一个</p>
+                    </div>
+                    <div style="margin-left: 3%;margin-top: 1%">
+                        <form id="inspectionTaskForm" class="layui-form">
+                            <div class="layui-form-item" style="margin: auto">
+                                <div class="layui-inline" style="width: 25%">
+                                    <label class="layui-form-label messageForm">班组名称：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto">
+                                <div class="layui-inline" style="width: 25%">
+                                    <label class="layui-form-label">父级目录：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="theparent" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto;position: relative">
+                                <div class="layui-inline" style="width: 25%">
+                                    <label class="layui-form-label messageForm">可选人员列表：</label>
+                                    <div class="layui-input-block ">
+                                        <input type="text" name="theparent" class="layui-input" style="width: 100%" placeholder="输入姓名的一部分">
+                                    </div>
+                                    <button type="button" class="layui-btn" style="position: relative;top: -37px;left: 104%;width: 100px;">新增</button>
+                                </div>
+                            </div>
+                            <div style="position: relative;">
+                                <div id="peopleBZ" class="demo-transfer" style="margin-left: 6%;"></div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto;margin-top: 3%">
+                                <div class="layui-inline" style="width: 25%">
+                                    <label class="layui-form-label">班组描述：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="theparent" class="layui-input" placeholder="输入10个字以内的基本信息">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" class="layui-btn" style="margin-left: 33% ;width: 100px">确认添加</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- 班组管理---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【搜索】选择搜索条件，可根据创建人，创建时间或输入班组名称的一部分进行搜索</p>
+                        <p>【查看】显示指定班组信息</p>
+                        <p>【修改】对班组信息进行更改</p>
+                    </div>
+                    <div class="zerendiv">
+                        <div style="margin-left: 5%;margin-top: 1%">查询条件</div>
+                        <div class=" row " style="justify-content: center;display: flex;">
+                            <form id="inspectionTaskF" class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">班组名称：</label>
+                                        <div class="layui-input-block" style="width: 60%;">
+                                            <input type="text" name="team" class="layui-input" placeholder="输入班组名称">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建人：</label>
+                                        <div class="layui-input-block" style="width: 60%;">
+                                            <select name="interest" lay-filter="aihao">
+                                                <option value="">全部</option>
+                                                <option value="0">张一鸣</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline " style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建时间(起)：</label>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建时间(止)：</label>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="margin-left: 99%;margin-top: -9%;">
+                                        <button type="button" class="layui-btn" style="width: 100px;">搜索</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <table class="layui-hide" id="demo4"></table>
+                        </div>
+                    </div>
+                    <!-- 班组管理---------内容区 -->
+                </div>
+                <!-- 新增巡检点---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【巡点经纬度】为更精确定位巡点位置，请将经纬度填写准确。</p>
+                        <p> <span style="color: red"> 建议:</span>首先用平板到现场采集巡点坐标，如果出现偏差，可以在<span style="color: red">【巡点管理】-->【地图选点】</span>里面地图上<span style="color: red">拖动</span>巡点，拖动到指定位置后，<span style="color: red">放开</span>鼠标即可</p>
+                        <p>【巡点编号】编号由系统自动生成，【巡点名称，巡点地址】名字须方便用户记忆，请认真填写</p>
+                        <p>【巡点地区】当前巡点所属的区域，比如青羊区，为了方便路线根据区域选择，须填写地区</p>
+                        <p>【巡点描述】当前巡点的常规数据，比如生产商，生产日期，维护周期，尺寸等参数，该数据会显示到地图上方便随时查看巡点信息，请认真填写</p>
+                    </div>
+                    <div class=" row " style="justify-content: center;display: flex;">
+                        <form id="inspectionTaskF" class="layui-form" action="" lay-filter="example">
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 100%; ">
+                                    <label class="layui-form-label messageForm">巡点名称：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <label class="layui-form-label messageForm">巡点类型：</label>
+                                    <div class="layui-input-block">
+                                        <select name="interest" lay-filter="aihao">
+                                            <option value="0">调压器</option>
+                                            <option value="1">阀门甩头</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <label class="layui-form-label messageForm">详细地址：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="">
+                                    <label class="layui-form-label messageForm">纬度：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input" readonly="readonly" value="00.0000">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="">
+                                    <label class="layui-form-label messageForm">经度：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input" readonly="readonly" value="00.0000">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-right: 0px">
+                                    <button type="button" class="layui-btn" id="mapChooseXZXJD">地图选点</button>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <label class="layui-form-label messageForm">选点地区：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-upload">
+                                    <label class="layui-form-label messageForm">上传图片：</label>
+                                    <button type="button" class="layui-btn" id="pictureFZ" style="width: 100px;"><i class="layui-icon ">&#xe64a;</i>选择</button>
+                                    <div class="layui-upload-list" style="margin-left:15%">
+                                        <img class="layui-upload-img" id="demo1">
+                                        <p id="demoText"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <label class="layui-form-label messageForm">巡点描述：</label>
+                                    <div class="layui-input-block">
+                                        <textarea id="miaoshu" rows="8" cols="100%"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin-left: 33%">
+                                <div class="layui-input-block">
+                                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1" style="width: 19%">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 19%">重置</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- 新增巡检点---------内容区 -->
+                </div>
+                <!-- 巡检点查询---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【搜索】选择巡点区域进行筛选，默认按照创建时间倒排序</p>
+                        <p>【查看】查看选择的巡点的详细信息</p>
+                        <p><span style="color: red">【修改】</span>对选择的巡点信息进行修改，经纬度的修改可以使用【地图选点】功能，直接从地图上面获取该巡点的坐标</p>
+                        <p><span style="color: red">【删除】</span>有正在进行工单的巡点不能删除，巡点信息非常重要，除非真的创建错误，否则请不要轻易删除巡点</p>
+                    </div>
+                    <div class="zerendiv">
+                        <div style="margin-left: 5%;margin-top: 1%">查询条件</div>
+                        <div class=" row " style="justify-content: center;display: flex;">
+                            <form id="inspectionTasF" class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline" style="width: 92%;">
+                                        <label class="layui-form-label messageForm">巡点名：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="team" class="layui-input" placeholder="输入巡点名称">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">所属区域：</label>
+                                        <div class="layui-input-block" style="width: 60%;">
+                                            <select name="interest" lay-filter="aihao">
+                                                <option value="">全部</option>
+                                                <option value="0">测试</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建人：</label>
+                                        <div class="layui-input-block" style="width: 60%;">
+                                            <select name="interest" lay-filter="aihao">
+                                                <option value="">全部</option>
+                                                <option value="0">张一鸣</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline " style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建时间(起)：</label>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="text" class="layui-input" id="timeStartSFMXJDCX" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 48%;">
+                                        <label class="layui-form-label messageForm">创建时间(止)：</label>
+                                        <div class="layui-input-inline" style="width: 60%;">
+                                            <input type="text" class="layui-input" id="timeEndSFMXJDCX" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="margin-left: 99%;margin-top: -8%">
+                                        <button type="button" style="width: 100px;" class="layui-btn">搜索</button>
+                                    </div>
+                                    <div class="layui-inline " style="margin-left: 110%;margin-top: -12%;">
+                                        <button type="button" style="width: 100ox;margin-left: 20px;" class="layui-btn">导出巡点</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="layui-hide" id="demo5"></table>
+                    </div>
+                    <!-- 巡检点查询---------内容区 -->
+                </div>
+                <!-- 班组日志---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【查询日期】查询指定日期的班组日志信息</p>
+                        <p><span style="color: red">【无数据】</span>如果指定日期没有任何成员填写对应的班组日志，将会不会显示该班组</p>
+                    </div>
+                    <div>
+                        <div class="layui-inline " style="margin-top:1%;margin-left: 2%">
+                            <label class="layui-form-label messageForm">查询日期：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="timeStartBZRZ" placeholder="yyyy-MM-dd">
+                            </div>
+                            <div class="layui-input-inline">
+                                <button type="button" class="layui-btn" id="*" style="width: 100px;">查询</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <table class="layui-hide" id="demoBZRZ"></table>
+                        </div>
+                    </div>
+                    <!-- 班组日志---------内容区 -->
+                </div>
+                <!-- 填写工作日志---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="log" style="width: 75%;background-color: #CDE6FF ;margin: auto;">
+                        <p style="font-size: xx-large;padding-top: 55px">UT装置系统管网工序交接班日志</p>
+                        <p style="font-size: 20px;">编号：（RE-WHYTB-31-1004）</p>
+                        <p style="font-size: 20px;">记录用标准单位：t/h、t/d、Nm³/h 、℃、MPa、kPa 、kg 、mg/kg、Ⅰ、Ⅱ、Ⅲ、Ⅳ、→、←、≤、≥、＜、＞、～</p>
+                        <p style="font-size: 20px;">①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳</p>
+                    </div>
+                    <div style="width: 75%;  justify-content: center;display: flex; margin: auto;margin-top: 1%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="margin-left: 5%;">
+                                    <label class="layui-form-label messageForm" style="margin-left: -14%">班次开始时间(起)：</label>
+                                    <div class="layui-input-inline" style="margin-left: 8%">
+                                        <input type="text" class="layui-input" id="timeStartSFMTXRZ" placeholder="yyyy-MM-dd HH:mm:ss">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin: 0;">
+                                    <label class="layui-form-label messageForm" style="margin-left: -7%">班次开始时间(止)：</label>
+                                    <div class="layui-input-inline" style="margin-left: 7%">
+                                        <input type="text" class="layui-input" id="timeEndSFMTXRZ" placeholder="yyyy-MM-dd HH:mm:ss">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin:0 0 0 -4%;">
+                                    <label class="layui-form-label messageForm">班组：</label>
+                                    <div class="layui-input-block">
+                                        <select name="*" lay-filter="aihao">
+                                            <option value="">全部</option>
+                                            <option value="0">测试</option>
+                                            <option value="1">前端</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin: 0 0 0 -4%;">
+                                    <label class="layui-form-label messageForm">经理：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- 填写工作日志---------内容区 -->
+                </div>
+                <!-- 工作日志---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="zerendiv" style="width: 98%">
+                        <div style="margin-left: 5%;margin-top: 1%">查询条件</div>
+                        <hr>
+                        <div class=" row " style="justify-content: center;display: flex;">
+                            <div class="layui-form-item">
+                                <div class="layui-inline " style="width: 48%;">
+                                    <label class="layui-form-label messageForm" style="margin-left: -40%">班次开始时间(起)：</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" class="layui-input" id="timeStartSFMGZRZ" placeholder="yyyy-MM-dd HH:mm:ss">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%;">
+                                    <label class="layui-form-label messageForm" style="margin-left: -40%">班次开始时间(止)：</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" class="layui-input" id="timeEndSFMGZRZ" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                    </div>
+                                </div>
+                                <div class="layui-inline " style="margin-left: 85%;margin-top: -8%;">
+                                    <button type="button" class="layui-btn" style="height: 37px;width: 100px;background: dodgerblue;">本次班组Excel</button>
+                                </div>
+                                <div class="layui-inline " style="margin-left: 98%;margin-top: -12%;">
+                                    <button type="button" class="layui-btn" style="width: 100px;">搜索</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="width: 99%; margin: auto ;">
+                        <table class="layui-hide" id="demo7"></table>
+                    </div>
+                    <!-- 工作日志---------内容区 -->
+                </div>
+                <!-- 任务指派---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【工单类型】工单类型默认为巡检任务,隐患派发任务为巡检任务</p>
+                        <p>【执行时间】表示需要巡检人员去开始巡检工单的时间【要求完成时间】表示巡检人员最终完成工单的时间上限</p>
+                        <p>【负责人】表示巡检组的负责人，比如组长【参与人】如果该工单分配给某个组，则组下面的成员就可以是参与人员</p>
+                    </div>
+                    <div style="width: 75% ;margin: auto; justify-content: center;display: flex ;margin-top: 4%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item" style="margin: auto">
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">标题：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" placeholder="日常巡检" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">类型：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" placeholder="日常巡检" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">单选框：</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sex" value="用户" title="根据用户进行选择" checked="">
+                                    <input type="radio" name="sex" value="分组" title="根据分组进行选择">
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto;">
+                                <label class="layui-form-label messageForm">工单负责人：</label>
+                                <div class="layui-input-block " style="width: 81.2%;">
+                                    <select id="*" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="张一鸣">张一鸣</option>
+                                            <option value="石家宝">石家宝</option>
+                                        </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin-top:2%">
+                                <label class="layui-form-label messageForm">工单参与人：</label>
+                                <div class="layui-input-block " style="width: 81.2%;">
+                                    <select name="*" xm-select="select1">
+                                    <option value="1" disabled="disabled">北京</option>
+                                    <option value="2" selected="selected">上海</option>
+                                    <option value="3">广州</option>
+                                    <option value="4" selected="selected">深圳</option>
+                                    <option value="5">天津</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline " style="width: 48%;">
+                                    <label class="layui-form-label messageForm">执行时间：</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" class="layui-input" id="timeStartSFMRWZP" placeholder="yyyy-MM-dd HH:mm:ss">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%;">
+                                    <label class="layui-form-label messageForm">要求完成时间：</label>
+                                    <div class="layui-input-inline" style="width: 60%;">
+                                        <input type="text" class="layui-input" id="timeEndSFMRWZP" placeholder="yyyy-MM-dd HH:mm:ss">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">路线选择：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" placeholder="日常巡检" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">缓冲小时数：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" placeholder="日常巡检" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin: auto;">
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">执行类型：</label>
+                                    <div class="layui-input-block ">
+                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="张一鸣">张一鸣</option>
+                                            <option value="石家宝">石家宝</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="width: 48%">
+                                    <label class="layui-form-label messageForm">周期频率：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="*" required lay-verify="required" placeholder="日常巡检" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item" style="margin-top: 2%">
+                                <label class="layui-form-label messageForm">工单内容：</label>
+                                <textarea rows="8" cols="71%"></textarea>
+                            </div>
+                            <div class="layui-form-item" style="margin-left: 48%">
+                                <div class="layui-inline">
+                                    <button type="button" class="layui-btn" style="margin-left: -67%">保存</button>
+                                </div>
+                                <div class="layui-inline">
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- 任务指派---------内容区 -->
+                </div>
+                <!-- 任务查询---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【搜索】<span style="color: red">要求执行时间必须选择,普通模式下选择执行人可搜索到其他参与人任务</span></p>
+                        <p>【高级】选择创建人和工单类型进行搜索,<span style="color: red">未处理的任务请清空结束时间再搜索</span></p>
+                        <p>【详细】查看指定工单的派工信息，并提供<span style="color: red">打印功能</span></p>
+                        <p>【回放】若该工单已完成或终止，则跳转到路径回放页面，回放工单的巡检轨迹</p>
+                        <p>【实况】若该工单正在进行中，则跳转到实时监控页面，获取该工单的最新巡检轨迹</p>
+                    </div>
+                    <div class="zerendiv">
+                        <p>查询条件</p>
+                        <hr>
+                        <div style="justify-content: center;display: flex;margin: auto;width: 75%">
+                            <form id="inspectionTaskForm" class="layui-form" style="width: 75%">
+                                <div class="layui-form-item" style="margin-left: -8%;">
+                                    <div class="layui-inline" style="width: 33%">
+                                        <label class="layui-form-label messageForm">标题：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="team" class="layui-input" placeholder="输入巡检标题">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 33%">
+                                        <label class="layui-form-label messageForm">执行人：</label>
+                                        <div class="layui-input-block">
+                                            <select id="types" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="like1[write]" lay-skin="primary" title="周期任务">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-left: -8%;">
+                                    <div class="layui-inline " style="width: 38%">
+                                        <label class="layui-form-label messageForm" style="margin-right: 20px;">要求执行时间(起)：</label>
+                                        <div class="layui-input-inline" style="width: 59%">
+                                            <input type="text" class="layui-input" id="timeStartSFMZXSJ" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 38%">
+                                        <label class="layui-form-label messageForm" style="margin-left: -13%">要求执行时间(止)：</label>
+                                        <div class="layui-input-inline" style="width: 59%">
+                                            <input type="text" class="layui-input" id="timeEndSFMZXSJ" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline ">
+                                        <button type="button" class="layui-btn">搜索</button>
+                                        <button id="listPopupSel" @click="imgSwitch2()" type="button" style="position: relative;top: -37px;left: 100%;" class="layui-btn">高级</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- 点击高级后弹出的表单-->
+                        <div v-show="listPopupStore">
+                            <form id="inspectionTaskFom1" class="layui-form" style="width: 75%;margin-left: 18%;">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline" style="width: 33%">
+                                        <label class="layui-form-label messageForm">创建人：</label>
+                                        <div class="layui-input-block">
+                                            <select id="type1" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 33%">
+                                        <label class="layui-form-label messageForm">类型：</label>
+                                        <div class="layui-input-block">
+                                            <select id="巡检任务" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option value="张一鸣">巡检任务</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline " style="width: 38%;margin-left: 1.5%;">
+                                        <label class="layui-form-label messageForm">结束时间(起)：</label>
+                                        <div class="layui-input-inline" style="width: 59%">
+                                            <input type="text" class="layui-input" id="timeStartSFMJSSJ" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 38%">
+                                        <label class="layui-form-label messageForm" style="margin-left: -13%">结束时间(止)：</label>
+                                        <div class="layui-input-inline" style="width: 59%">
+                                            <input type="text" class="layui-input" id="timeEndSFMJSSJ" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div style="width: 99%; margin: auto ;">
+                        <table class="layui-hide" id="demo8"></table>
+                    </div>
+
+                    <!-- 任务查询---------内容区 -->
+                </div>
+                <!-- 指标管理---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【排序】勾选指标时优先显示</p>
+                        <p>【是否默认】<span style="color: red">默认被勾选的指标值</span></p>
+                        <p>【添加】指标名、排序、指标值都不能为空</p>
+                        <p>【指标值】<span style="color: red">请点击后面 "+ ×" 符号，进行增加和删除</span></p>
+                        <p>【搜索】默认按照操作时间倒排序</p>
+                        <p>【查看】查看选择的指标的详细信息</p>
+                        <p><span style="color: red">【修改】</span>对选择的指标信息进行修改，只能修改或增加原有指标值(不能删除)</p>
+                        <p><span style="color: red">【禁用/启用】</span>谨慎操作</p>
+                    </div>
+                    <div style="margin-top: 1%;margin-left: 2%">
+                        <button id="addIndex" data-method="setTop" type="button" class="layui-btn" style="width: 100px;background: deepskyblue;">添加指标</button>
+                    </div>
+                    <div class="zerendiv" style="width: 98%;margin: auto;margin-top: 1%">
+                        <p style="margin-left: 3%">条件查询</p>
+                        <hr>
+                        <div style="width: 75%;justify-content: center;display: flex;margin: auto">
+                            <form id="inspectionTaskF" class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline ">
+                                        <label class="layui-form-label messageForm">班组名称：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="team" class="layui-input" placeholder="输入班组名称">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm">创建人：</label>
+                                        <div class="layui-input-block">
+                                            <select name="interest" lay-filter="aihao">
+                                                <option value="">全部</option>
+                                                <option value="0">张一鸣</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="margin-left: -10%">
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="like1[write]" lay-skin="primary" title="显示禁用" checked="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="margin-left: 1%;">
+                                    <div class="layui-inline " style="margin-left: 12%">
+                                        <label class="layui-form-label messageForm" style="margin-left: -46%">班次开始时间(起)：</label>
+                                        <div class="layui-input-inline" style="width: 61%;">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label messageForm" style="margin-left: -45%">班次开始时间(止)：</label>
+                                        <div class="layui-input-inline" style="width: 70%;margin-left: -2%">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="margin-left: -9%">
+                                        <button type="button" class="layui-btn">搜索</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div style="width:98%;margin-top: 1% ;margin: auto">
+                        <table class="layui-hide" id="ZBGL"></table>
+                    </div>
+                    <!-- 指标管理---------内容区 -->
+                </div>
+                <!-- 类型管理---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【筛选指标名称】筛选出的结果靠前显示</p>
+                        <p>【已选指标】该巡点类型下对应的指标</p>
+                        <p><span style="color: red">【搜索】输入关键字或ID</span></p>
+                    </div>
+                    <div style="margin-top: 1%;margin-left: 5%">
+                        <button id="addClass" data-method="setTop" class="layui-btn" type="button" class="layui-btn" style="width: 100px;background: deepskyblue;">添加类型</button>
+                    </div>
+
+                    <div class="zerendiv" style="width: 98%;margin: auto;margin-top: 1%">
+                        <p style="margin-left: 3%">条件查询</p>
+                        <hr>
+                        <div style="width: 80%;justify-content: center;display: flex;margin: auto">
+                            <div class="layui-form-item">
+                                <div class="layui-inline ">
+                                    <label class="layui-form-label messageForm" style="margin-left: -15%">班类型名称/类型ID：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input" placeholder="输入关键字或类型ID">
+                                    </div>
+                                </div>
+                                <div class="layui-inline ">
+                                    <button type="button" class="layui-btn">搜索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 98%;margin: auto;margin-top: 2%">
+                        <table class="layui-hide" id="LXGL"></table>
+                    </div>
+                    <!-- 类型管理---------内容区 -->
+                </div>
+                <!-- 线路管理---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【搜索】根据创建时间筛选符合条件的路线</p>
+                        <p style="color: red">【删除】若路线创建错误，则可以删除路线，正在进行工单的路线不能删除 【修改】可以修改选择路线的巡点列表顺序</p>
+                    </div>
+                    <div class="zerendiv" style="width: 98%;margin: auto;margin-top: 1%">
+                        <p style="margin-left: 3%">条件查询</p>
+                        <hr>
+                        <div style="width: 75%;justify-content: center;display: flex;margin: auto">
+                            <form id="inspectionTaskForm" class="layui-form" style="width: 80%">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline" style="width: 35%">
+                                        <label class="layui-form-label messageForm">路线名称：</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="team" class="layui-input" placeholder="输入路线名称">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 35%">
+                                        <label class="layui-form-label messageForm">创建人：</label>
+                                        <div class="layui-input-block">
+                                            <select id="types" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline " style="width: 40%">
+                                        <label class="layui-form-label messageForm">创建时间(起)：</label>
+                                        <div class="layui-input-block" style="width: 63%;">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline" style="width: 40%;margin-left: -5%">
+                                        <label class="layui-form-label messageForm">创建时间(止)：</label>
+                                        <div class="layui-input-block" style="width: 63%;">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline ">
+                                        <button type="button" class="layui-btn">搜索</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div style="width:98%;margin-top: 1% ;margin: auto">
+                        <table id="lu"></table>
+                    </div>
+                    <!-- 线路管理---------内容区 -->
+                </div>
+                <!-- 线路新增---------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【路线名称】给路线取一个方便记忆的名称，请正确填写</p>
+                        <p>【路线描述】对该路线的描述要尽量能说明路线大概方向</p>
+                        <p>【选择巡点】右侧巡点顺序即是要巡查路线的顺序</p>
+                        <p>【提示】若左边可选巡点过多，可先选择区域，再进行巡点的操作</p>
+                    </div>
+                    <div style="width: 70%;margin: auto ;margin-top: 2%;justify-content: center;display: flex">
+                        <form id="inspectionTas1kForm" class="layui-form" style="width: 85%">
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 72%">
+                                    <label class="layui-form-label messageForm">路线名称：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input" placeholder="输入路线名称">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="width: 30%">
+                                    <label class="layui-form-label messageForm">路线描述：</label>
+                                    <div class="layui-input-block">
+                                        <textarea rows="8" cols="78%"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline" style="">
+                                    <label class="layui-form-label messageForm">巡检区域：</label>
+                                    <div class="layui-input-block">
+                                        <select id="t1ypes" name="type" lay-verify="required" lay-filter="select_id">
+                                            <option>全部</option>
+                                            <option value="张一鸣">A区</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-left: -10%">
+                                    <div class="layui-input-block">
+                                        <input type="text" name="team" class="layui-input" placeholder="输入巡检名的一部分">
+                                    </div>
+                                </div>
+                                <div class="layui-inline ">
+                                    <button type="button" class="layui-btn">搜索</button>
+                                </div>
+                                <div class="layui-form-item" style="margin-top: 2%">
+                                    <div id="test2" class="demo-transfer"></div>
+                                </div>
+                                <div class="layui-form-item" style="margin-top: 3%;margin-left: 44%">
+                                    <button type="button" class="layui-btn">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- 线路新增---------内容区 -->
+                </div>
+                <!-- 巡检考核评估------内容区 -->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+
+                    <div class="task_notice">
+                        <p>【搜索】 可以查询巡检人在选择时间段内完成工单状况，选择【全部】则显示公司所有巡检人在选择时间段内完成工单的情况</p>
+                        <p>【描述】 鼠标放与元饼图上，可看到具体比例信息</p>
+                        <p>【打印】 可打印考核评估表,<span style="color: red">打印信息显示不完整可使用横向打印</span></p>
+                        <p style="color: red">【说明】管理人员可根据该数据判断巡检人的巡检效率，该数据仅作为巡检人巡检效率的参考指标，实际评估请按相关标准执行</p>
+                    </div>
+                    <div style="justify-content:center;display: flex;margin: auto;margin-top: 3%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <div class="layui-inline" style="">
+                                        <label class="layui-form-label messageForm">巡检人员：</label>
+                                        <div class="layui-input-block ">
+                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <label class="layui-form-label messageForm">执行时间：</label>
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <p>到</p>
+                                    </div>
+                                    <div class="layui-inline" style="">
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">搜索</button>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">打印</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- 巡检日历报表------内容区-->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale"></div>
+                <!--隐患类型分析-------内容区-->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【说明】默认统计一个月数据</p>
+                        <p style="color: red">【打印】打印信息显示不完整可使用横向打印</p>
+                    </div>
+                    <div style="justify-content:center;display: flex;margin: auto;margin-top: 3%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <div class="layui-inline" style="">
+                                        <label class="layui-form-label messageForm">巡检人员：</label>
+                                        <div class="layui-input-block ">
+                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <label class="layui-form-label messageForm">执行时间：</label>
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <p>到</p>
+                                    </div>
+                                    <div class="layui-inline" style="">
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">搜索</button>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">打印</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-xs6">
+                            <div class="grid-demo grid-demo-bg1 log">
+                                <div style="margin-top: 2%">
+                                    <p style="font-size: 18px"> 隐患类型分析统计表</p>
+                                    <div style="width: 100%; margin: auto ;">
+                                        <table class="layui-hide" id="YHLXFX"></table>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 2%">
+                                    <p style="font-size: 18px"> 隐患重要程度分析</p>
+                                    <div style="width: 100%; margin: auto;">
+                                        <table class="layui-hide" id="YHCDFX"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="grid-demo">
+                                /**右侧数据统计图区域*/
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--隐患区域分析-------内容区-->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【说明】默认统计一个月数据</p>
+                        <p style="color: red">【打印】打印信息显示不完整可使用横向打印</p>
+                    </div>
+                    <div style="justify-content:center;display: flex;margin: auto;margin-top: 3%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <div class="layui-inline" style="">
+                                        <label class="layui-form-label messageForm">巡检人员：</label>
+                                        <div class="layui-input-block ">
+                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <label class="layui-form-label messageForm">执行时间：</label>
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <p>到</p>
+                                    </div>
+                                    <div class="layui-inline" style="">
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">搜索</button>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">打印</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-xs6">
+                            <div class="grid-demo grid-demo-bg1 log">
+                                <div style="margin-top: 2%">
+                                    <p style="font-size: 18px"> 隐患类型分析统计表</p>
+                                    <div style="width: 100%; margin: auto ;">
+                                        <table class="layui-hide" id="GL"></table>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 2%">
+                                    <p style="font-size: 18px"> 隐患重要程度分析</p>
+                                    <div style="width: 100%; margin: auto;">
+                                        <table class="layui-hide" id="GZ"></table>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 2%">
+                                    <p style="font-size: 18px"> 隐患重要程度分析</p>
+                                    <div style="width: 100%; margin: auto;">
+                                        <table class="layui-hide" id="ZZQ"></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="grid-demo">
+                                /**右侧数据统计图区域*/
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--隐患数量分析---------内容区-->
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div class="task_notice">
+                        <p>【说明】默认统计一个月数据</p>
+                        <p style="color: red">【打印】打印信息显示不完整可使用横向打印</p>
+                    </div>
+                    <div style="justify-content:center;display: flex;margin: auto;margin-top: 3%">
+                        <form id="inspectionTaskF" class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <div class="layui-inline" style="">
+                                        <label class="layui-form-label messageForm">巡检人员：</label>
+                                        <div class="layui-input-block ">
+                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+                                                <option>全部</option>
+                                                <option value="张一鸣">张一鸣</option>
+                                                <option value="石家宝">石家宝</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <label class="layui-form-label messageForm">执行时间：</label>
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <p>到</p>
+                                    </div>
+                                    <div class="layui-inline" style="">
+                                        <div class="layui-input-inline" style="">
+                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">搜索</button>
+                                    </div>
+                                    <div class="layui-inline " style="">
+                                        <button type="button" class="layui-btn" style="width: 80px">打印</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <!--                        数据统计图区域-->
+                    </div>
+                    <div class="log" style="margin-top: 2%">
+                        <p style="font-size: 18px"> 隐患数量分析统计表</p>
+                        <div style="width: 98%; margin: auto ;">
+                            <table class="layui-hide" id="YHSLFX"></table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal inmodal pwd-modal fade" id="pwd-modal" tabindex="-1" role="dialog" aria-hidden="true" style="margin:0px auto;padding-top:20%;">
-        <div class="modal-dialog wid-400">
-            <div class="modal-content bg-white-0">
-                <div class="modal-header bg-base color-white" style="background: #0c68a7!important">
-                    <button type="button" class="close color-white" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    <h5 class="modal-title">修改密码</h5>
-                </div>
-                <div class="modal-body fts-15 unified text-center bg-white p-t-25">
-                    <form class="form-horizontal fts-12" role="form">
-                        <div class="form-group">
-                            <label for="old-pwd"><em class="color-red">* </em><span>原密码：</span></label>
-                            <input type="password" class="form-control wid-250" id="old-pwd">
-                        </div>
-                        <div class="form-group">
-                            <label for="new-pwd"><em class="color-red">* </em><span>新密码：</span></label>
-                            <input type="password" class="form-control wid-250" id="new-pwd">
-                        </div>
-                        <div class="form-group">
-                            <label for="q-pwd"><em class="color-red">* </em><span>确认密码：</span></label>
-                            <input type="password" class="form-control wid-250" id="q-pwd">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer text-center bg-white">
-                    <button type="button" class="btn btn-primary btn-rad-4 fts-12" id="btnChangePassWord">确定</button>
-                    <button type="button" class="btn btn-default btn-rad-4 fts-12" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div id="TaskInfomation" class="com_absolute Capacity main_us  fn_us_Over com_DivBor" ">
-        <div class="top ">
-            <span>工单处理流程</span><img onclick="common.defaultCloseUs(); " src="./images/close.png ">
-        </div>
-        <ul class="flow ">
-            <li>管理人员创建工单</li>
-            <li>
-                 
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员接受工单</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员开始巡检</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员暂停/结束</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检完成填写报告</li>
-        </ul>
-        <div class="top ">
-            <span>隐患上报流程</span>
-        </div>
-        <ul class="flow ">
-            <li>巡检人员上报隐患</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>管理人员收到隐患</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>管理人员创建工单</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员接受工单</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员处理隐患</li>
-            <li>
-                <img src="./images/arrow1.png "></li>
-            <li>巡检人员填写报表</li>
-        </ul>
-    </div>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./layui/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/Danger_query.js"></script>
+    <script src="https://raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/index.js"></script>
 
-    <div class="succeedInfo "></div>
-    <div class="errorInfo "></div>
+    <script id="handleButtons" type="text/html">
+        <a class="layui-btn layui-btn-xs" lay-event="edit" style="width:40px;">详细</i></a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">审核</a>
+    </script>
+    <script>
+        layui.use('layer', function() { //独立版的layer无需执行这一句
+            var $ = layui.jquery,
+                layer = layui.layer; //独立版的layer无需执行这一句
+
+            //触发事件
+            var active = {
+                setTop: function() {
+                    var that = this;
+                    //多窗口模式，层叠置顶
+                    layer.open({
+                        type: 2, //此处以iframe举例
+                        title: '添加类型',
+                        area: ['1000px', '700px'],
+                        shade: 0,
+                        maxmin: false,
+                        content: ['././pages/addClass.html', 'no'],
+                        btn: ['确定', '取消'],
+                        yes: function() {
+                            layer.closeAll();
+                        },
+                        btn2: function() {
+                            layer.closeAll();
+                        },
+                        zIndex: layer.zIndex, //重点1
+                        success: function(layero) {
+                            layer.setTop(layero); //重点2
+                        }
+                    });
+                },
 
 
-<script src="./js/showBo.js "></script>
-<script src="./js/HomeMain.js " defer="defer "></script>
-<script src="./js/index.js "></script>
-<script src="./js/jquery.cookies.2.1.0.js " type="text/javascript "></script>
-<script src="./js/Loading.js " type="text/javascript "></script>
-<script src="./js/ui_common.js " type="text/javascript "></script>
-<script src="./js/monitor.comm.js " type="text/javascript "></script>
-<script src="./js/select2.min.js " type="text/javascript "></script>
-<script src="./js/MainComanyId.js " type="text/javascript "></script>
-<script type="text/javascript ">
-    function exitSystem(sel) {
-        layer.confirm('确认退出系统吗？', function () {
-            document.cookie = null;
-            host = window.location.href;
-            host = host.substr(host.indexOf(". ") + 1, (host.length - host.indexOf(". ") + 1));
-            host = host.substr(0, host.indexOf(".com "));
-            console.log(host);
-            clearCookies();
-            window.sopTop.location.reload(true);
-            //window.sopTop.location.href = "http://login.chengdurst.work:8090/Login.html?AppCode=Work&BackUrl=http%3a%2f%2fwork. " + host + ".com%3a8090%2f&SSOTimeOut=600 ";
+
+            };
+
+            $('#addClass').on('click', function() {
+                var othis = $(this),
+                    method = othis.data('method');
+                active[method] ? active[method].call(this, othis) : '';
+            });
+
         });
-    }
-    $(function () {
-        Fscreen()
-    })
+    </script>
+    <script>
+        layui.use('layer', function() { //独立版的layer无需执行这一句
+            var $ = layui.jquery,
+                layer = layui.layer; //独立版的layer无需执行这一句
 
-    $(function () {
-        LoadInfo();
-        $.ajax({
-            type: "POST ",  //提交方式
-            url: "/Pages/HttpRequest/PmsMng.ashx ",//路径
-            data: { "Flag ": "LoadMenu " },
-            success: function (result) {//返回数据根据结果进行相应的处理
-                var str = loadMenu($.parseJSON(result));
-                $("#menuLeft ").empty().append(str);
-            }
+            //触发事件
+            var active = {
+                setTop: function() {
+                    var that = this;
+                    //多窗口模式，层叠置顶
+                    layer.open({
+                        type: 2, //此处以iframe举例
+                        title: '添加指标',
+                        area: ['800px', '500px'],
+                        shade: 0,
+                        maxmin: false,
+                        content: ['././pages/addIndex.html', 'no'],
+                        btn: ['确定', '取消'],
+                        yes: function() {
+                            layer.closeAll();
+                        },
+                        btn2: function() {
+                            layer.closeAll();
+                        },
+                        zIndex: layer.zIndex, //重点1
+                        success: function(layero) {
+                            layer.setTop(layero); //重点2
+                        }
+                    });
+                },
+
+
+
+            };
+
+            $('#addIndex').on('click', function() {
+                var othis = $(this),
+                    method = othis.data('method');
+                active[method] ? active[method].call(this, othis) : '';
+            });
+
         });
-
-        ////全屏/退出全屏
-        //var a = 0;
-        //$('#fullscreen').on('click', function () {
-        //    a++;
-        //    a % 2 == 1 ? enterfullscreen() || iefull() : exitfullscreen();
-        //});
-
-        //应用中心
-        $("#Use ").click(function () {
-            window.location = "http://xitongguanwang.whchem.com:8090 ";
-        });
-        //修改密码
-        $("#btnChangePassWord ").click(function () {
-            submitPassword();
-        });
-    })
-
-    var loadMenu = function (menuData) {
-        /*左菜单栏的小箭头*/
-        var imgJianTou1 = './images/jiantou1.png';
-        var str = $("<ul>
-        </ul>"); for (var i = 0; i
-        < menuData.length; i++) { var item=m enuData[i]; if (item.MenuName=='添加区域' || item.MenuName=='区域查询' || item.MenuName=='区域维护' ) { continue; } if (item.TreeDepth==0 ) { str.addClass( "show"); } else { str.addClass( "hide"); } var li=$ (
-            "<li class='varied'></li>"); var hoverMenu=$ ( "<div class='menuHover visibili'><div>"); li.append(hoverMenu); var div=$ ( "<div class='fatherBox'></div>"); var imgUrl=i tem.IconImageUrl; div.append( '<i class="' + imgUrl + '" ></i>'); div.append(
-            '<samp class="p-l-10 ZiTiSize">' + item.MenuName + '</samp>'); if (item.Childs.length> 0) { div.append('
-            <img class=jiantou src="' + imgJianTou1 + '" />'); } else { div.append('
-            <img class=jiantou style="display:none" src="" />'); } li.append(div); var childBox = $('
-            <div class="childBox hide"></div>'); if (item.Childs.length > 0) { for (var j = 0; j
-            < item.Childs.length; j++) { var childDivListitem=$ ( "<div class='childDivList' style='letter-spacing:1px'>" + item.Childs[j].MenuName + "</div>"); /*点击二级子菜单显示字体颜色和背景*/ childDivListitem.click(function () { if ($(this).css( 'color', '#252525')) { $(this).css(
-                'color', '#252525').siblings().css( 'color', '#252525'); //$(this).parent().css( 'color', '#064b98'); $(this).parent().parent().children( '.fatherBox').children( 'i').css( 'color', '#064b98'); $(this).parent().parent().children( '.fatherBox').children(
-                'samp').css( 'color', '#064b98'); $(this).parent().parent().siblings().children( '.childBox').children( '.childDivList').css( 'color', '#252525') } }); (function (data, dom, parentDom, childBox, item) { dom.hover(function () { if (parentDom.attr(
-                "isSelect")) { return; } parentDom.addClass( "activeVaried"); dom.addClass( "activeChildDivList"); }, function () { if (parentDom.attr( "isSelect")) { return; } parentDom.removeClass( "activeVaried"); dom.removeClass( "activeChildDivList"); }); dom.click(function
-                () { $( "#menuLeft").find( "li").siblings().removeAttr( "isSelect").removeClass( "activeVaried"); $( ".childBox").removeClass( "show").addClass( "hide"); $( ".sanJiaoDiv").removeClass( "show").addClass( "hide"); childBox.addClass( "show").removeClass(
-                "hide"); $( ".activeChildDivList").removeClass( "activeChildDivList"); parentDom.attr( "isSelect", true); parentDom.addClass( "activeVaried"); dom.addClass( "activeChildDivList"); if (item.OpenForm !="javascript:void(0)" && item.OpenForm.indexOf(
-                "aspx")> -1) { $('#only-frame').attr('src', item.OpenForm); } }); })(item, childDivListitem, li, childBox, item.Childs[j]); childBox.append(childDivListitem); } } li.append(childBox); str.append(li); (function (item, li, childBox, div, str, hoverMenu)
-                { div.click(function () { if (item.OpenForm != "javascript:void(0)" && item.OpenForm.indexOf("aspx") > -1) { $('#only-frame').attr('src', item.OpenForm); } $(".childBox").removeClass("show").addClass("hide"); $(".menuHover").addClass("visibili");
-                hoverMenu.removeClass("visibili"); str.find("li").find(".activeVaried").removeAttr("style").removeClass("activeVaried"); div.css("color", "rgb(6, 75, 152)"); div.addClass("activeVaried"); //移除其他dom的样式 if (li.attr("isSelect")) { childBox.removeClass("show").addClass("hide");
-                li.removeAttr("isSelect"); } else { childBox.addClass("show").removeClass("hide"); str.find("li").removeAttr("isSelect"); li.attr("isSelect", true); } var liDomList = str.find("li"); /*点击父div换箭头*/ if ($('.activeVaried>.jiantou').attr('src')
-                == './images/jiantou1.png') { $('.activeVaried>.jiantou').attr('src', 'Images/index_main/jiantou2.png'); $(this).parent().siblings().children().children('.jiantou').attr('src', './images/jiantou1.png'); $(this).parent().siblings().children('.fatherBox').children('samp').css('color',
-                '#252525'); $('.activeVaried>samp').css('color', '#064b98'); $(this).parent().siblings().children(".fatherBox").children("i").css('color', '#252525'); } else if ($('.activeVaried>.jiantou').attr('src') == 'Images/index_main/jiantou2.png')
-                { $('.jiantou').attr('src', './images/jiantou1.png'); //$(this).nextAll().children().css('color', '#064b98'); $('.fatherBox>samp').css('color', '#252525'); } else { $(this).nextAll().children().css('color', '#252525'); $('.fatherBox>samp').css('color',
-                '#252525'); } }); li.click(function () { div.addClass("activeVaried"); }, function () { if (li.attr("isSelect")) { return; } div.removeClass("activeVaried"); div.removeAttr("style"); }); })(item, li, childBox, div, str, hoverMenu); } return
-                str; } //提交密码修改方法 var submitPassword = function () { var old = $("#old-pwd").val(); var news = $("#new-pwd").val(); var newsT = $("#q-pwd").val(); //修改前验证 if (old == "") { showErrMsg("请输入原密码！"); return false; } if (news == "") { showErrMsg("请输入新密码！");
-                return false; } else { if (!(/^[A-Za-z0-9]{6,14}$/.test(news))) { showErrMsg("请输入6-14位包含数字、字母的密码！"); return false; } } if (newsT == "") { showErrMsg("请输入确认密码！"); return false; } else { if (!(/^[A-Za-z0-9]{6,14}$/.test(newsT))) { showErrMsg("请输入6-14位包含数字、字母的确认密码！");
-                return false; } } if ($("#new-pwd").val() != $("#q-pwd").val()) { $("#q-pwd").val(""); showErrMsg("两次输入的密码不一致,请重新输入密码。"); return false; } layer.msg("建设中", { icon: 7, time: 1000 }); return false; //执行密码修改 $.ajax({ type: 'POST', url: "/Home/SubmitUpdatePassword",
-                data: { oldPwd: $("#old-pwd").val(), newPwd: $("#new-pwd").val() }, async: true, dataType: "json", success: function (data) { if (data && data.Success) { showSuccessMsg("用户密码修改成功。"); $("#pwd-modal").modal("hide"); } else { showErrMsg("用户密码修改失败,请重试");
-                return false; } } }); }; //错误信息提示框 function showErrMsg(msg) { $(".errorInfo").html(msg); $(".errorInfo").show(); setTimeout('$(".errorInfo").fadeOut()', 1500); }; //成功信息提示框 function showSuccessMsg(msg) { $(".succeedInfo").html(msg); $(".succeedInfo").show();
-                setTimeout('$(".succeedInfo").fadeOut()', 1500); }; //控制全屏方法 function enterfullscreen() {//进入全屏 $("#fullscreen").text("退出全屏"); var docElm = document.documentElement; //W3C if (docElm.requestFullscreen) { docElm.requestFullscreen(); } //FireFox
-                else if (docElm.mozRequestFullScreen) { docElm.mozRequestFullScreen(); } //Chrome等 else if (docElm.webkitRequestFullScreen) { docElm.webkitRequestFullScreen(); } //IE11 else if (docElem.msRequestFullscreen) { docElem.msRequestFullscreen();
-                } } function Fscreen() { //全屏/退出全屏 var a = 0; $('#fullscreen').on('click', function () { a++; a % 2 == 1 ? enterfullscreen() || iefull() : exitfullscreen(); }); } //退出全屏方法 function exitfullscreen() { $("#fullscreen").text("全屏显示"); if (document.exitFullscreen)
-                { document.exitFullscreen(); } else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); } else if (document.webkitCancelFullScreen) { document.webkitCancelFullScreen(); } else if (document.msExitFullscreen) { document.msExitFullscreen();
-                } } //ie低版本的全屏，退出全屏都这个方法 function iefull() { $("#fullscreen").text("退出全屏"); var el = document.documentElement; var rfs = el.msRequestFullScreen; if (typeof window.ActiveXObject != "undefined") { //这的方法 模拟f11键，使浏览器全屏 var wscript = new ActiveXObject("WScript.Shell");
-                if (wscript != null) { wscript.SendKeys("{F11}"); } } }
-
-                </script>
+    </script>
 </body>
 
 </html>

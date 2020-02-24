@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加类型</title>
+    <link rel="stylesheet" href="../layui/layui/css/layui.css">
+    <script src="../layui/layui/layui.js"></script>
+</head>
+
+<body>
+    <!-- 添加类型模态框内容-->
+    <div style="margin: auto;margin-top: 1%;justify-content: center;display: flex">
+        <form id="inspectionTas1kF" class="layui-form" style="width: 70%">
+            <div class="layui-form-item" style="margin-bottom: 0;">
+                <div class="layui-inline " style="width: 80%;">
+                    <label class="layui-form-label messageForm" style="width: 100px;">巡点类型名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="team" class="layui-input" style="position: relative;top: -36px;" placeholder="输入班组名称">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom: 0;">
+                <div class="layui-inline " style="width: 67%;">
+                    <label class="layui-form-label messageForm" style="width: 100px;">巡点类型名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="team" class="layui-input" style="position: relative;top: -36px;" placeholder="输入班组名称">
+                    </div>
+                </div>
+                <div class="layui-inline ">
+                    <button type="button" class="layui-btn" style="margin-top: -36px;">确认筛选</button>
+                </div>
+            </div>
+            <div id="CSK" class="demo-transfer" style="margin-left: 1%;"></div>
+            <div class="layui-form-item" style="margin-top: 2%;margin-left: 41%">
+                <div class="layui-inline ">
+                    <button type="button" class="layui-btn">添加巡点类型</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--添加指标弹框-->
+    <div>
+        <form id="inspectionTasF" class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-inline" style="width: 85%">
+                    <label class="layui-form-label messageForm">指标名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="team" class="layui-input" placeholder="请输入名称">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline" style="width: 63%">
+                    <label class="layui-form-label messageForm">指标选项：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="team" class="layui-input" placeholder="选项">
+                    </div>
+                </div>
+                <div class="layui-inline" style="margin-left: -10%">
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="是否默认" checked="">
+                    </div>
+                </div>
+                <div class="layui-inline" style="    position: relative;margin-top: -6%;margin-left: 70%;">
+                    <div class="layui-input-block">
+                        <i class="layui-icon ">&#xe61f</i>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    layui.use(['form'], function() {
+        var form = layui.form;
+        form.render();
+    });
+</script>
+<script>
+    layui.use(['transfer', 'layer', 'util'], function() {
+        var $ = layui.$,
+            transfer = layui.transfer,
+            layer = layui.layer,
+            util = layui.util;
+
+        //模拟数据
+        var data1 = [{
+                "value": "1",
+                "title": "李白"
+            }, {
+                "value": "2",
+                "title": "杜甫"
+            }, {
+                "value": "3",
+                "title": "苏轼"
+            }, {
+                "value": "4",
+                "title": "李清照"
+            }, {
+                "value": "5",
+                "title": "鲁迅",
+                "disabled": true
+            }, {
+                "value": "6",
+                "title": "巴金"
+            }, {
+                "value": "7",
+                "title": "冰心"
+            }, {
+                "value": "8",
+                "title": "矛盾"
+            }, {
+                "value": "9",
+                "title": "贤心"
+            }]
+            //定义标题及数据源
+        transfer.render({
+            elem: '#CSK',
+            title: ['备选指标', '已选指标'] //自定义标题
+                ,
+            data: data1,
+            width: 300 //定义宽度
+        })
+
+    });
+</script>
+
+</html>

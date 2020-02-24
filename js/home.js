@@ -8,7 +8,7 @@ let intm = {
         id: '',
         name: '管廊管理',
         sysName: '管廊管理系统',
-        path: '',
+        path: './pages/pipeGallery/pipeGallery.html',
         showHead: true
     }
     //pipe gallery management
@@ -23,8 +23,9 @@ let conm = {
         id: 'PIPE',
         name: '施工管理',
         sysName: '施工管理系统',
-        path: '',
-        // query: '?opt=safe'
+        path: './pages/constructionManagement/constructionManagement.html',
+        showHead: true
+            // query: '?opt=safe'
     }
     //Inspection management
     // let insm = {
@@ -38,14 +39,16 @@ let undpn = {
         id: 'DXPIPE',
         name: '地下管网',
         sysName: '地下管网系统',
-        path: ''
+        path: './pages/undergroundPipe/undergroundPipe.html',
+        showHead: true
+
     }
     //SCADA
 let scada = {
         id: 'GAS',
         name: 'SCADA',
         sysName: 'SCADA',
-        path: '',
+        path: './pages/scada/scada.html',
         showHead: true
     }
     //Emergency management
@@ -53,7 +56,8 @@ let emem = {
     id: 'EMG',
     name: '应急管理',
     sysName: '应急管理系统',
-    path: ''
+    path: './pages/emergencyManagement/emergencyManagement.html',
+    showHead: true
 }
 
 //日常管理导航
@@ -77,7 +81,7 @@ let film = {
         id: 'OSS',
         name: '文件管理',
         sysName: '文件管理系统',
-        path: ''
+        path: 'http://www.rst.com:3000'
     }
     //Screen display
 let sd = {
