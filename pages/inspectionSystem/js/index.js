@@ -20,9 +20,6 @@
      },
  })
 
-
-
-
  /***************************
   *********1.隐患上报页面**********
   *********2.选择经纬度按钮*********
@@ -64,7 +61,6 @@
          });
      });
  });
-
 
  /***************************
   *********1.隐患上报页面**********
@@ -148,131 +144,6 @@
                  uploadInst.upload();
              });
          }
-     });
- });
-
- /***************************
-  *********1.隐患查询页面**********
-  *********2.上报时间选择*********
-  ***************************/
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //常规用法
-     laydate.render({
-         elem: '#timeStart'
-     });
-     laydate.render({
-         elem: '#timeEnd'
-     });
- })
- layui.use('laydate', function() {
-         var laydate = layui.laydate;
-         //常规用法
-         laydate.render({
-             elem: '#timeStartBZRZ'
-         });
-
-     })
-     /***************************
-      *********1.分组管理页面**********
-      *********2.创建时间选择*********
-      ***************************/
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-
-     //创建时间(起):
-     laydate.render({
-         elem: '#timeStartSFM',
-         type: 'datetime'
-     });
-     //创建时间(止):
-     laydate.render({
-         elem: '#timeEndSFM',
-         type: 'datetime'
-     });
- });
- //  巡检点查询日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //创建时间(起):
-     laydate.render({
-         elem: '#timeStartSFMXJDCX',
-         type: 'datetime'
-     });
-     //创建时间(止):
-     laydate.render({
-         elem: '#timeEndSFMXJDCX',
-         type: 'datetime'
-     });
- });
- //  工作日志日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //创建时间(起):
-     laydate.render({
-         elem: '#timeStartSFMGZRZ',
-         type: 'datetime'
-     });
-     //创建时间(止):
-     laydate.render({
-         elem: '#timeEndSFMGZRZ',
-         type: 'datetime'
-     });
- });
- //  填写工作日志日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //创建时间(起):
-     laydate.render({
-         elem: '#timeStartSFMTXRZ',
-         type: 'datetime'
-     });
-     //创建时间(止):
-     laydate.render({
-         elem: '#timeEndSFMTXRZ',
-         type: 'datetime'
-     });
- });
- //  任务指派日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //创建时间(起):
-     laydate.render({
-         elem: '#timeStartSFMRWZP',
-         type: 'datetime'
-     });
-     //创建时间(止):
-     laydate.render({
-         elem: '#timeEndSFMRWZP',
-         type: 'datetime'
-     });
- });
- //  任务查询日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //执行时间(起):
-     laydate.render({
-         elem: '#timeStartSFMZXSJ',
-         type: 'datetime'
-     });
-     //执行时间(止):
-     laydate.render({
-         elem: '#timeEndSFMZXSJ',
-         type: 'datetime'
-     });
- });
- //  任务查询日期选择*********
- layui.use('laydate', function() {
-     var laydate = layui.laydate;
-     //执行时间(起):
-     laydate.render({
-         elem: '#timeStartSFMJSSJ',
-         type: 'datetime'
-     });
-     //执行时间(止):
-     laydate.render({
-         elem: '#timeEndSFMJSSJ',
-         type: 'datetime'
      });
  });
 
@@ -403,4 +274,88 @@
              parent.location.reload(); //刷新父页面，注意一定要在关闭当前iframe层之前执行刷新
              parent.layer.close(index); //再执行关闭
          });
+ });
+
+ //  弹框区域
+ layui.use('layer', function() { //独立版的layer无需执行这一句
+     var $ = layui.jquery,
+         layer = layui.layer; //独立版的layer无需执行这一句
+
+     //触发事件
+     var active = {
+         setTop: function() {
+             var that = this;
+             //多窗口模式，层叠置顶
+             layer.open({
+                 type: 2, //此处以iframe举例
+                 title: '添加类型',
+                 area: ['1000px', '700px'],
+                 shade: 0,
+                 maxmin: false,
+                 content: ['././pages/addClass.html', 'no'],
+                 btn: ['确定', '取消'],
+                 yes: function() {
+                     layer.closeAll();
+                 },
+                 btn2: function() {
+                     layer.closeAll();
+                 },
+                 zIndex: layer.zIndex, //重点1
+                 success: function(layero) {
+                     layer.setTop(layero); //重点2
+                 }
+             });
+         },
+
+
+
+     };
+
+     $('#addClass').on('click', function() {
+         var othis = $(this),
+             method = othis.data('method');
+         active[method] ? active[method].call(this, othis) : '';
+     });
+
+ });
+ layui.use('layer', function() { //独立版的layer无需执行这一句
+     var $ = layui.jquery,
+         layer = layui.layer; //独立版的layer无需执行这一句
+
+     //触发事件
+     var active = {
+         setTop: function() {
+             var that = this;
+             //多窗口模式，层叠置顶
+             layer.open({
+                 type: 2, //此处以iframe举例
+                 title: '添加指标',
+                 area: ['800px', '500px'],
+                 shade: 0,
+                 maxmin: false,
+                 content: ['././pages/addIndex.html', 'no'],
+                 btn: ['确定', '取消'],
+                 yes: function() {
+                     layer.closeAll();
+                 },
+                 btn2: function() {
+                     layer.closeAll();
+                 },
+                 zIndex: layer.zIndex, //重点1
+                 success: function(layero) {
+                     layer.setTop(layero); //重点2
+                 }
+             });
+         },
+
+
+
+     };
+
+     $('#addIndex').on('click', function() {
+         var othis = $(this),
+             method = othis.data('method');
+         active[method] ? active[method].call(this, othis) : '';
+     });
+
  });

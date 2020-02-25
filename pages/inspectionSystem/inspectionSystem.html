@@ -10,20 +10,19 @@
     <link rel="stylesheet" href="./layui/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="./css/style1.css">
     <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" type="text/css" href="https://raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.css" />
-    <script src="./layui/layui/lay/modules/layer.js"></script>
-    <script src="./js/vue.js"></script>
-    <script src="./js/echarts.js"></script>
+    <link rel="stylesheet" href="./css/formSelects-v4.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/calendar.css">
+
 </head>
 
 <body style="background: #ffffff;">
-
     <!-- *****左侧导航***** -->
     <div class="leftNav" id="leftNav">
         <div class="imgSwitch" id="imgSwitch" style="left: 10px;top: 40%;">
             <img @click="imgSwitch()" src="../../images/收起.png" alt="">
         </div>
-        <ul v-show="imgSwitchStore" class="layui-nav layui-nav-tree" lay-filter="test">
+        <ul v-show="imgSwitchStore" class="layui-nav layui-nav-tree" lay-filter="test" style="overflow: auto;position: fixed;height: 92%;margin-top: 3%;">
             <!-- 收起菜单按钮 -->
             <div class="imgSwitch" id="imgSwitch">
                 <img @click="imgSwitch()" src="../../images/收起.png" alt="">
@@ -96,7 +95,7 @@
                 <dl class="layui-nav-child" id="btn8">
                     <button class="layui-btn site-demo-active" data-type="tabChange81">巡检考核评估</button><br>
                     <button class="layui-btn site-demo-active" data-type="tabChange82">巡检日历报表</button><br>
-                    <button class="layui-btn site-demo-active" data-type="tabChange83">隐患类型分析</button><br>
+                    <button class="layui-btn site-demo-active" data-type="tabChange83" style="margin:-0.32px 0;">隐患类型分析</button><br>
                     <button class="layui-btn site-demo-active" data-type="tabChange84">隐患区域分析</button><br>
                     <button class="layui-btn site-demo-active" data-type="tabChange85">隐患数量分析</button><br>
                 </dl>
@@ -890,10 +889,10 @@
                             </div>
                             <div class="layui-form-item" style="margin-left: 48%">
                                 <div class="layui-inline">
-                                    <button type="button" class="layui-btn" style="margin-left: -67%">保存</button>
+                                    <button type="button" class="layui-btn" style="margin-left: -67%;width: 100px;">保存</button>
                                 </div>
                                 <div class="layui-inline">
-                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 100px;">重置</button>
                                 </div>
                             </div>
                         </form>
@@ -1052,13 +1051,13 @@
                                     <div class="layui-inline " style="margin-left: 12%">
                                         <label class="layui-form-label messageForm" style="margin-left: -46%">班次开始时间(起)：</label>
                                         <div class="layui-input-inline" style="width: 61%;">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMZBGL" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label messageForm" style="margin-left: -45%">班次开始时间(止)：</label>
                                         <div class="layui-input-inline" style="width: 70%;margin-left: -2%">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMZBGL" placeholder="yyyy-MM-dd HH:mm:ss">
 
                                         </div>
                                     </div>
@@ -1141,17 +1140,17 @@
                                     <div class="layui-inline " style="width: 40%">
                                         <label class="layui-form-label messageForm">创建时间(起)：</label>
                                         <div class="layui-input-block" style="width: 63%;">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMXLGL" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline" style="width: 40%;margin-left: -5%">
                                         <label class="layui-form-label messageForm">创建时间(止)：</label>
                                         <div class="layui-input-block" style="width: 63%;">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMXLGL" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline ">
-                                        <button type="button" class="layui-btn">搜索</button>
+                                        <button type="button" class="layui-btn" style="width: 100px;">搜索</button>
                                     </div>
                                 </div>
 
@@ -1211,7 +1210,7 @@
                                     <div id="test2" class="demo-transfer"></div>
                                 </div>
                                 <div class="layui-form-item" style="margin-top: 3%;margin-left: 44%">
-                                    <button type="button" class="layui-btn">保存</button>
+                                    <button type="button" class="layui-btn" style="width: 100px;">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -1227,7 +1226,7 @@
                         <p>【打印】 可打印考核评估表,<span style="color: red">打印信息显示不完整可使用横向打印</span></p>
                         <p style="color: red">【说明】管理人员可根据该数据判断巡检人的巡检效率，该数据仅作为巡检人巡检效率的参考指标，实际评估请按相关标准执行</p>
                     </div>
-                    <div style="justify-content:center;display: flex;margin: auto;margin-top: 3%">
+                    <div style="justify-content:center;display: flex;margin-top: 3%;margin-left: -18%;">
                         <form id="inspectionTaskF" class="layui-form">
                             <div class="layui-form-item">
                                 <div class="layui-inline">
@@ -1244,7 +1243,7 @@
                                     <div class="layui-inline " style="">
                                         <label class="layui-form-label messageForm">执行时间：</label>
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMXJKH" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1252,7 +1251,7 @@
                                     </div>
                                     <div class="layui-inline" style="">
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMXJKH" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1264,10 +1263,16 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
+                    <div id="echartsContainerCompletion" style="width: 500px;height: 500px;top: -30px; left: 150px; "></div>
+                    <div id="echartsContainerPatrol" style="width: 500px;height: 500px; top: -530px;left: 700px;"></div>
+                    <div id="echartsContainerWork" style="width: 1000px; height: 400px;top: -530px;left: 150px;"></div>
                 </div>
                 <!-- 巡检日历报表------内容区-->
-                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale"></div>
+                <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
+                    <div id="calendar" style="margin-left: 20%;margin-top: 2%;"></div>
+                </div>
                 <!--隐患类型分析-------内容区-->
                 <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
                     <div class="task_notice">
@@ -1291,7 +1296,7 @@
                                     <div class="layui-inline " style="">
                                         <label class="layui-form-label messageForm">执行时间：</label>
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMYHLX" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1299,7 +1304,7 @@
                                     </div>
                                     <div class="layui-inline" style="">
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMYHLX" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1359,7 +1364,7 @@
                                     <div class="layui-inline " style="">
                                         <label class="layui-form-label messageForm">执行时间：</label>
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMYHQY" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1367,7 +1372,7 @@
                                     </div>
                                     <div class="layui-inline" style="">
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMYHQY" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1433,7 +1438,7 @@
                                     <div class="layui-inline " style="">
                                         <label class="layui-form-label messageForm">执行时间：</label>
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeStartSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeStartSFMYHSL" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1441,7 +1446,7 @@
                                     </div>
                                     <div class="layui-inline" style="">
                                         <div class="layui-input-inline" style="">
-                                            <input type="text" class="layui-input" id="timeEndSFM" placeholder="yyyy-MM-dd HH:mm:ss">
+                                            <input type="text" class="layui-input" id="timeEndSFMYHSL" placeholder="yyyy-MM-dd HH:mm:ss">
                                         </div>
                                     </div>
                                     <div class="layui-inline " style="">
@@ -1455,7 +1460,7 @@
                         </form>
                     </div>
                     <div>
-                        <!--                        数据统计图区域-->
+                        <!--数据统计图区域-->
                     </div>
                     <div class="log" style="margin-top: 2%">
                         <p style="font-size: 18px"> 隐患数量分析统计表</p>
@@ -1467,104 +1472,108 @@
             </div>
         </div>
     </div>
-
-
-    <script src="./js/jquery-3.4.1.min.js"></script>
-    <script src="./layui/layui/layui.js" charset="utf-8"></script>
-    <script src="./js/Danger_query.js"></script>
-    <script src="https://raw.githack.com/hnzzmsf/layui-formSelects/master/dist/formSelects-v4.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./js/index.js"></script>
-
+    <!-- 表单内操作按钮 -->
     <script id="handleButtons" type="text/html">
         <a class="layui-btn layui-btn-xs" lay-event="edit" style="width:40px;">详细</i></a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">删除</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">审核</a>
     </script>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/echarts.js"></script>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./layui/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/Danger_query.js"></script>
+    <script src="./js/formSelects-v4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/layuiTime.js"></script>
+    <script src="./js/echartsIndex.js"></script>
+    <script src="./js/calendar.js"></script>
     <script>
-        layui.use('layer', function() { //独立版的layer无需执行这一句
-            var $ = layui.jquery,
-                layer = layui.layer; //独立版的layer无需执行这一句
+        var data = [{
+            startDate: "2018-6-10",
+            name: "事件1"
+        }, {
+            startDate: "2018-7-10",
+            name: "事件1"
+        }, {
+            startDate: "2018-8-10",
+            name: "事件1"
+        }, {
+            startDate: "2018-9-10",
+            name: "事件1"
+        }, {
+            startDate: "2018-10-10",
+            name: "事件1"
+        }, {
+            startDate: "2018-11-1",
+            name: "事件2"
+        }, {
+            startDate: "2018-11-1",
+            name: "事件11"
+        }, {
+            startDate: "2018-12-1",
+            name: "事件12"
+        }, {
+            startDate: "2018-12-1",
+            name: "事件13"
+        }, {
+            startDate: "2018-12-1",
+            name: "事14"
+        }, {
+            startDate: "2019-1-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-2-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-3-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-4-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-5-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-6-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-7-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-8-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-9-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-10-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-11-10",
+            name: "事件14"
+        }, {
+            startDate: "2019-12-10",
+            name: "事件14"
+        }, {
+            startDate: "2020-1-10",
+            name: "事件14"
+        }, {
+            startDate: "2020-2-10",
+            name: "事件14"
+        }, ]
 
-            //触发事件
-            var active = {
-                setTop: function() {
-                    var that = this;
-                    //多窗口模式，层叠置顶
-                    layer.open({
-                        type: 2, //此处以iframe举例
-                        title: '添加类型',
-                        area: ['1000px', '700px'],
-                        shade: 0,
-                        maxmin: false,
-                        content: ['././pages/addClass.html', 'no'],
-                        btn: ['确定', '取消'],
-                        yes: function() {
-                            layer.closeAll();
-                        },
-                        btn2: function() {
-                            layer.closeAll();
-                        },
-                        zIndex: layer.zIndex, //重点1
-                        success: function(layero) {
-                            layer.setTop(layero); //重点2
-                        }
-                    });
-                },
-
-
-
-            };
-
-            $('#addClass').on('click', function() {
-                var othis = $(this),
-                    method = othis.data('method');
-                active[method] ? active[method].call(this, othis) : '';
-            });
-
-        });
-    </script>
-    <script>
-        layui.use('layer', function() { //独立版的layer无需执行这一句
-            var $ = layui.jquery,
-                layer = layui.layer; //独立版的layer无需执行这一句
-
-            //触发事件
-            var active = {
-                setTop: function() {
-                    var that = this;
-                    //多窗口模式，层叠置顶
-                    layer.open({
-                        type: 2, //此处以iframe举例
-                        title: '添加指标',
-                        area: ['800px', '500px'],
-                        shade: 0,
-                        maxmin: false,
-                        content: ['././pages/addIndex.html', 'no'],
-                        btn: ['确定', '取消'],
-                        yes: function() {
-                            layer.closeAll();
-                        },
-                        btn2: function() {
-                            layer.closeAll();
-                        },
-                        zIndex: layer.zIndex, //重点1
-                        success: function(layero) {
-                            layer.setTop(layero); //重点2
-                        }
-                    });
-                },
-
-
-
-            };
-
-            $('#addIndex').on('click', function() {
-                var othis = $(this),
-                    method = othis.data('method');
-                active[method] ? active[method].call(this, othis) : '';
-            });
-
-        });
+        $("#calendar").calendar({
+            data: data,
+            mode: "month",
+            //  maxEvent: 3,
+            //showModeBtn: false
+            //  newDate: "2018-04-1",
+            cellClick: function(events) {
+                //viewCell的事件列表
+            },
+        })
     </script>
 </body>
 
