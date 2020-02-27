@@ -154,16 +154,14 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">隐患标题：</label>
                                     <div class="layui-input-block" style="height: 10px">
-                                        <input type="text" name="title" required lay-verify="required" style="width: 300px;" placeholder="请输入隐患标题..." autocomplete="off" class="layui-input">
+                                        <input id="hiddenTitle" type="text" name="title" required lay-verify="required" style="width: 300px;" placeholder="请输入隐患标题..." autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">隐患类型：</label>
-                                    <div class="layui-input-block " style="width: 300px">
-                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
-                                            <option>--请选择--</option>
-                                            <option value="管道泄漏">管道泄漏</option>
-                                            <option value="管道腐蚀">管道腐蚀</option>
+                                    <div id="YHLX" class="layui-input-block " style="width: 300px">
+                                        <select id="YHLX_xiala" name="type" lay-verify="required" lay-filter="select_id">
+                                            <!-- option选项 -->
                                         </select>
                                     </div>
                                 </div>
@@ -172,20 +170,20 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">区域(管廊)：</label>
                                     <div class="layui-input-block " style="width: 300px">
-                                        <select id="tubearea" name="tubearea" lay-verify="required" lay-filter="select_id">
-                                            <option>--请选择--</option>
+                                        <select id="GL_xiala" name="tubearea" lay-filter="test" lay-verify="required" lay-filter="select_id">
+                                            <!-- <option>--请选择--</option>
                                             <option value="管道泄漏">管道泄漏</option>
-                                            <option value="管道腐蚀">管道腐蚀</option>
+                                            <option value="管道腐蚀">管道腐蚀</option> -->
                                         </select>
                                     </div>
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">区域(管轴)：</label>
                                     <div class="layui-input-block " style="width: 300px">
-                                        <select id="axisarea" name="axisarea" lay-verify="required" lay-filter="select_id">
-                                            <option>--请选择--</option>
+                                        <select id="GZ_xiala" name="axisarea" lay-verify="required" lay-filter="select_id">
+                                            <!-- <option>--请选择--</option>
                                             <option value="管道泄漏">管道泄漏</option>
-                                            <option value="管道腐蚀">管道腐蚀</option>
+                                            <option value="管道腐蚀">管道腐蚀</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -219,7 +217,7 @@
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">内容：</label>
-                                    <textarea cols="87" rows="6" id="text" class="SpanHeight">正常时应该是:
+                                    <textarea id="content" cols="87" rows="6" id="text" class="SpanHeight">正常时应该是:
     异常：
     预估：
     隐患程度：
@@ -232,21 +230,24 @@
 
                             <div class="layui-form-item">
                                 <label class="layui-form-label">上传图片：</label>
-                                <div class="layui-upload">
-                                    <button type="button" class="layui-btn layui-btn-normal" id="pictureYHSB" style="width: 15%;"><i class="layui-icon">&#xe64a;</i>选择</button>
-                                    <div class="layui-upload-list">
+                                <div class="layui-upload" style="margin-bottom: -50px;">
+                                    <!-- <button type="button" class="layui-btn layui-btn-normal" id="pictureYHSB" style="width: 15%;"><i class="layui-icon">&#xe64a;</i>选择</button> -->
+                                    <input type="file" id="pictureYHSB">
+                                    <div class="layui-upload-list imgPreview">
                                         <img class="layui-upload-img" id="demo1">
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">上传视频：</label>
-                                <button type="button" class="layui-btn layui-btn-normal" id="videoYHSB" style="width: 15%;"><i class="layui-icon">&#xe6ed;</i>选择</button>
+                                <input type="file" id="videoYHSB">
+                                <!-- <button type="button" class="layui-btn layui-btn-normal" id="videoYHSB" style="width: 15%;"><i class="layui-icon">&#xe6ed;</i>选择</button> -->
                             </div>
 
                             <div class="layui-form-item" style="margin-left: 100px;margin-top:50px">
                                 <div class="layui-input-block" style="margin-left:20%">
-                                    <button class="layui-btn" lay-submit lay-filter="formDemo" style="width: 80px">保存</button>
+                                    <!-- lay-submit lay-filter="formDemo" -->
+                                    <button id="YHSBClick" class="layui-btn" lay-submit lay-filter="formDemo" style="width: 80px">提交</button>
                                     <button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 100px;width: 80px">重置</button>
                                 </div>
                             </div>
@@ -263,21 +264,23 @@
                         <p style="color: red">【说明】管理人员可以通过巡检人员上报的隐患，派另外的巡检人员去进行故障排除</p>
                     </div>
                     <div class="container-fluid row " style="justify-content: center;display: flex;">
-                        <form id="inspectionTaskForm" class="layui-form">
+                        <form id="inspectionTaskForm_YHCX" class="layui-form">
                             <div class="layui-form-item" style="margin: auto">
                                 <div class="layui-inline" style="width: 48%">
                                     <label class="layui-form-label messageForm">隐患标题：</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="title" required lay-verify="required" style="width:99%;" placeholder="输入隐患标题" autocomplete="off" class="layui-input">
+                                        <input id="hiddenTitle_SS" type="text" name="hiddenTitle" required lay-verify="required" style="width:99%;" placeholder="输入隐患标题" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-inline" style="width: 48%">
                                     <label class="layui-form-label">隐患类型：</label>
                                     <div class="layui-input-block ">
-                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
+
+                                        <select id="YHCX_xiala" name="hiddenType" lay-verify="required" lay-filter="select_id">
+                                        <!-- <select id="type" name="type" lay-verify="required" lay-filter="select_id">
                                             <option>全部</option>
                                             <option value="管道泄漏">管道泄漏</option>
-                                            <option value="管道腐蚀">管道腐蚀</option>
+                                            <option value="管道腐蚀">管道腐蚀</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -286,8 +289,8 @@
                                 <div class="layui-inline" style="width: 48%">
                                     <label class="layui-form-label">整改状态：</label>
                                     <div class="layui-input-block ">
-                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
-                                            <option>全部</option>
+                                        <select id="YHCX_ZT" name="rectificationStatus" lay-verify="required" lay-filter="select_id">
+                                            <option value="">全部</option>
                                             <option value="整改中">整改中</option>
                                             <option value="已整改">已整改</option>
                                         </select>
@@ -296,12 +299,12 @@
                                 <div class="layui-inline" style="width: 48%">
                                     <label class="layui-form-label">应急审核：</label>
                                     <div class="layui-input-block ">
-                                        <select id="type" name="type" lay-verify="required" lay-filter="select_id">
-                                            <option>全部</option>
-                                            <option value="管道泄漏">未审核</option>
-                                            <option value="管道腐蚀">应急未通过</option>
-                                            <option value="管道泄漏">应急完成</option>
-                                            <option value="管道腐蚀">未通过</option>
+                                        <select id="YHCX_YJSH" name="auditToEmergency" lay-verify="required" lay-filter="select_id">
+                                            <option value="">全部</option>
+                                            <option >未审核</option>
+                                            <option >应急未通过</option>
+                                            <option >应急完成</option>
+                                            <option >未通过</option>
                                         </select>
                                     </div>
                                 </div>
@@ -309,37 +312,37 @@
                                     <div class="layui-inline" style="width: 48%">
                                         <label class="layui-form-label">上报人：</label>
                                         <div class="layui-input-block ">
-                                            <select id="type" name="type" lay-verify="required" lay-filter="select_id">
-                                            <option>全部</option>
+                                            <select id="YHSBR_xiala" name="reporter" lay-verify="required" lay-filter="select_id">
+                                            <!-- <option>全部</option>
                                             <option value="张一鸣">张一鸣</option>
-                                            <option value="石家宝">石家宝</option>
+                                            <option value="石家宝">石家宝</option> -->
                                         </select>
                                         </div>
                                     </div>
                                     <div class="layui-inline" style="width: 48%">
                                         <label class="layui-form-label messageForm">区域负责人：</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="title" required lay-verify="required" style="width:99%;" placeholder="输入区域负责人" autocomplete="off" class="layui-input">
+                                            <input id="YHCX_QYFZR" type="text" name="areaManager" required lay-verify="required" style="width:99%;" placeholder="输入区域负责人" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="layui-form-item" style="margin: auto;">
                                     <div class="layui-inline" style="width: 48%">
                                         <label class="layui-form-label messageForm">管廊：</label>
-                                        <input type="text" name="title" placeholder="输入管轴" class="layui-input" style="width: 28%"><i class="layui-icon" style="position: relative;top: -25px;left: 64%;">&#xe67e;</i>
-                                        <input type="text" name="title" style="position: relative;width:28%;top: -54px;left: 72%;" placeholder="输入管轴" class="layui-input">
+                                        <input id="YHCX_GL" type="text" name="pipeGallery" placeholder="输入管廊" class="layui-input" style="width: 28%"><i class="layui-icon" style="position: relative;top: -25px;left: 64%;">&#xe67e;</i>
+                                        <input id="YHCX_GZ" type="text" name="pipeAxle" style="position: relative;width:28%;top: -54px;left: 72%;" placeholder="输入管轴" class="layui-input">
                                     </div>
                                     <div class="layui-inline" style="width: 48%">
                                         <label class="layui-form-label messageForm">上报时间：</label>
-                                        <input type="text" class="layui-input" id="timeStart" placeholder="yyyy-MM-dd" style="width: 28%">
+                                        <input name="startTime" type="text" class="layui-input" id="timeStartYHCX" placeholder="yyyy-MM-dd" style="width: 28%">
                                         <i class="layui-icon" style="position: relative;top: -25px;left: 64%;">&#xe67e;</i>
-                                        <input type="text" class="layui-input" id="timeEnd" placeholder="yyyy-MM-dd" style="position: relative;width:28%;top: -54px;left: 72%;">
+                                        <input name="endTime" type="text" class="layui-input" id="timeEndYHCX" placeholder="yyyy-MM-dd" style="position: relative;width:28%;top: -54px;left: 72%;">
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <div style="position: relative">
-                            <button type="button" class="layui-btn" style=" position: relative;left:300%;top:81%">搜索</button>
+                            <button type="button" class="layui-btn" data-type="reload" style=" position: relative;left:300%;top:81%" id="YHCXSSclick">搜索</button>
                             <button type="button" class="layui-btn" style=" position: relative;left:400%;top:64%">导出</button>
                         </div>
                     </div>
@@ -515,7 +518,7 @@
                             </form>
                         </div>
                         <div>
-                            <table class="layui-hide" id="demo4"></table>
+                            <table class="layui-hide" id="demoBZGL"></table>
                         </div>
                     </div>
                     <!-- 班组管理---------内容区 -->
@@ -678,7 +681,7 @@
                         </div>
                     </div>
                     <div>
-                        <table class="layui-hide" id="demo5"></table>
+                        <table class="layui-hide" id="demoXJDCX"></table>
                     </div>
                     <!-- 巡检点查询---------内容区 -->
                 </div>
@@ -1070,7 +1073,7 @@
                         </div>
                     </div>
                     <div style="width:98%;margin-top: 1% ;margin: auto">
-                        <table class="layui-hide" id="ZBGL"></table>
+                        <table class="layui-hide" id="demoZBGL"></table>
                     </div>
                     <!-- 指标管理---------内容区 -->
                 </div>
@@ -1158,7 +1161,7 @@
                         </div>
                     </div>
                     <div style="width:98%;margin-top: 1% ;margin: auto">
-                        <table id="lu"></table>
+                        <table id="demoXLGL"></table>
                     </div>
                     <!-- 线路管理---------内容区 -->
                 </div>
@@ -1271,7 +1274,7 @@
                 </div>
                 <!-- 巡检日历报表------内容区-->
                 <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
-                    <div id="calendar" style="margin-left: 20%;margin-top: 2%;"></div>
+                    <div id="calendar" style="margin-left: 2%;margin-top: 2%;"></div>
                 </div>
                 <!--隐患类型分析-------内容区-->
                 <div class="layui-tab-item contentPosition layui-anim layui-anim-scale">
@@ -1478,7 +1481,7 @@
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">删除</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" style="width:40px;">审核</a>
     </script>
-
+    <script src="./js/BASEURL.js"></script>
     <script src="./js/vue.js"></script>
     <script src="./js/echarts.js"></script>
     <script src="./js/jquery-3.4.1.min.js"></script>
@@ -1491,78 +1494,42 @@
     <script src="./js/calendar.js"></script>
     <script>
         var data = [{
-            startDate: "2018-6-10",
-            name: "事件1"
-        }, {
-            startDate: "2018-7-10",
-            name: "事件1"
-        }, {
-            startDate: "2018-8-10",
-            name: "事件1"
-        }, {
-            startDate: "2018-9-10",
-            name: "事件1"
-        }, {
-            startDate: "2018-10-10",
-            name: "事件1"
-        }, {
-            startDate: "2018-11-1",
-            name: "事件2"
-        }, {
-            startDate: "2018-11-1",
-            name: "事件11"
-        }, {
-            startDate: "2018-12-1",
-            name: "事件12"
-        }, {
-            startDate: "2018-12-1",
-            name: "事件13"
-        }, {
-            startDate: "2018-12-1",
-            name: "事14"
-        }, {
-            startDate: "2019-1-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-2-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-3-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-4-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-5-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-6-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-7-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-8-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-9-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-10-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-11-10",
-            name: "事件14"
-        }, {
-            startDate: "2019-12-10",
-            name: "事件14"
-        }, {
-            startDate: "2020-1-10",
-            name: "事件14"
-        }, {
             startDate: "2020-2-10",
-            name: "事件14"
-        }, ]
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-11",
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-12",
+            name: "巡检任务：2"
+        }, {
+            startDate: "2020-2-13",
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-14",
+            name: "巡检任务：10"
+        }, {
+            startDate: "2020-2-15",
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-16",
+            name: "巡检任务：12"
+        }, {
+            startDate: "2020-2-17",
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-18",
+            name: "巡检任务：1"
+        }, {
+            startDate: "2020-2-19",
+            name: "巡检任务：2"
+        }, {
+            startDate: "2020-2-20",
+            name: "巡检任务：3"
+        }, {
+            startDate: "2020-2-21",
+            name: "'<a href='www.baidu.com'>巡检任务：10</a>"
+        }]
 
         $("#calendar").calendar({
             data: data,

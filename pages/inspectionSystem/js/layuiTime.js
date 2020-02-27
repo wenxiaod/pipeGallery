@@ -2,14 +2,15 @@
   *********1.所有页面**********
   *********2.日期选择*********
   ***************************/
+ //  隐患查询时间
  layui.use('laydate', function() {
      var laydate = layui.laydate;
      //常规用法
      laydate.render({
-         elem: '#timeStart'
+         elem: '#timeStartYHCX'
      });
      laydate.render({
-         elem: '#timeEnd'
+         elem: '#timeEndYHCX'
      });
  })
  layui.use('laydate', function() {

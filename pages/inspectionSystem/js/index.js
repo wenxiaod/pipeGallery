@@ -67,85 +67,38 @@
   *********2.图片上传*********
   *********3.视频上传*********
   ***************************/
- layui.use('upload', function() {
-     var $ = layui.jquery,
-         upload = layui.upload;
+ $("#YHSBClick").click(function() {
+     var form = new FormData();
+     form.append("pictureFile", $("#pictureYHSB")[0].files[0]); //图片
+     form.append("videoFile", $("#videoYHSB")[0].files[0]); //视频
+     form.append("hiddenTitle", $("#hiddenTitle").val()); //隐患标题
+     form.append("hiddenType", $("#YHLX_xiala").val()); //隐患类型
+     form.append("pipeGallery", $("#GL_xiala").val()); //管廊
+     form.append("pipeAxle", $("#GZ_xiala").val()); //管轴
+     form.append("riskGrade", $("#level").val()); //风险等级
+     form.append("latitude", $("#latitude").val()); //纬度
+     form.append("longitude", $("#longitude").val()); //经度
+     form.append("content", $("#content").val()); //内容
+     $.ajax({
+         url: "http://www.rst.com:8000/api/v1/inspection/hidden/addHidden", //后台url
+         data: form,
+         cache: false,
+         async: false,
+         type: "POST", //类型，POST或者GET
+         dataType: 'json', //数据返回类型，可以是xml、json等
+         processData: false,
+         contentType: false,
+         success: function(msg) {
+             alert("提交成功！");
+         },
+         error: function(er) { //失败，回调函数
+             alert("预案附件不能为空");
+         }
+     });
 
-     //普通图片上传
-     var uploadInst = upload.render({
-         elem: '#pictureYHSB',
-         url: 'http://www.rst.com:8000/api/v1/inspection/hidden/addHidden' //改成您自己的上传接口
-             ,
-         before: function(obj) {
-             //预读本地文件示例，不支持ie8
-             obj.preview(function(index, file, result) {
-                 $('#demo1').attr('src', result); //图片链接（base64）
-             });
-         },
-         done: function(res) {
-             //如果上传失败
-             if (res.code > 0) {
-                 return layer.msg('上传失败');
-             }
-             //上传成功
-         },
-         error: function() {
-             //演示失败状态，并实现重传
-             var demoText = $('#demoText');
-             demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-             demoText.find('.demo-reload').on('click', function() {
-                 uploadInst.upload();
-             });
-         }
-     });
-     upload.render({
-         elem: '#videoYHSB',
-         url: 'https://httpbin.org/post' //改成您自己的上传接口
-             ,
-         accept: 'video' //视频
-             ,
-         done: function(res) {
-             layer.msg('上传成功');
-             console.log(res)
-         }
-     });
  });
- /***************************
-  *********1.新增巡检点页面**********
-  *********2.图片上传*********
-  ***************************/
- layui.use('upload', function() {
-     var $ = layui.jquery,
-         upload = layui.upload;
 
-     //普通图片上传
-     var uploadInst = upload.render({
-         elem: '#pictureFZ',
-         url: 'https://httpbin.org/post' //改成您自己的上传接口
-             ,
-         before: function(obj) {
-             //预读本地文件示例，不支持ie8
-             obj.preview(function(index, file, result) {
-                 $('#demo1').attr('src', result); //图片链接（base64）
-             });
-         },
-         done: function(res) {
-             //如果上传失败
-             if (res.code > 0) {
-                 return layer.msg('上传失败');
-             }
-             //上传成功
-         },
-         error: function() {
-             //演示失败状态，并实现重传
-             var demoText = $('#demoText');
-             demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-             demoText.find('.demo-reload').on('click', function() {
-                 uploadInst.upload();
-             });
-         }
-     });
- });
+
 
  /***************************
   *********1.所有页面**********
@@ -347,9 +300,6 @@
                  }
              });
          },
-
-
-
      };
 
      $('#addIndex').on('click', function() {
@@ -359,3 +309,144 @@
      });
 
  });
+
+
+ /***************************
+  *********1.隐患上报页面**********
+  *********2.隐患类型下拉选项******
+  ***************************/
+ $.ajax({
+     url: BASEURL + "/hiddenType/getAllHiddenType",
+     type: 'GET',
+     dataType: 'json',
+     // data:{},
+     success: function(result) {
+         let str = "<option value=''>全部</option>"
+         for (let i = 0; i < result.data.length; i++) {
+             str += "<option>" + result.data[i].hiddenTypeName + "</option>"
+         }
+         $("#YHLX_xiala").html(str);
+         $("#YHCX_xiala").html(str);
+         layui.use('form', function() {
+             var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+             form.render();
+         });
+     }
+ })
+
+ /***************************
+  *********1.隐患上报页面**********
+  *********2.区域（管廊）******
+  ***************************/
+ $.ajax({
+         url: BASEURL + "/resp/getAllPipeGallery",
+         type: 'GET',
+         dataType: 'json',
+         // data:{},
+         success: function(result) {
+             let str = "<option value=''>全部</option>";
+             for (let i = 0; i < result.data.length; i++) {
+                 str += "<option value='" + result.data[i] + "'>" + result.data[i] + "</option>"
+             }
+             $("#GL_xiala").html(str);
+             layui.use('form', function() {
+                 var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                 form.render();
+             });
+         }
+     })
+     /***************************
+      *********1.隐患上报页面**********
+      *********2.区域（管轴）******
+      ***************************/
+ layui.use('form', function() {
+     var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+     form.render();
+     form.on('select(test)', function(data) {
+         var selectVal = $("#GL_xiala").val();
+
+         $.ajax({
+             url: BASEURL + "/resp/getAxleByGallery",
+             type: 'GET',
+             dataType: 'json',
+             data: {
+                 gallery: selectVal
+             },
+             success: function(result) {
+                 let str = "";
+                 for (let i = 0; i < result.data.length; i++) {
+                     str += "<option>" + result.data[i] + "</option>"
+                 }
+
+                 $("#GZ_xiala").html(str);
+                 layui.use('form', function() {
+                     var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                     form.render();
+                 });
+             }
+         })
+
+     });
+ });
+
+ /***************************
+  *********1.隐患查询页面**********
+  *********2.上报人下拉选项******
+  ***************************/
+ $.ajax({
+     url: BASEURL + "/user/getAllUserName",
+     type: 'GET',
+     dataType: 'json',
+     // data:{},
+     success: function(result) {
+         let str = "<option value=''>全部</option>"
+         for (let i = 0; i < result.data.length; i++) {
+             str += "<option>" + result.data[i] + "</option>"
+         }
+         $("#YHSBR_xiala").html(str);
+         layui.use('form', function() {
+             var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+             form.render();
+         });
+     }
+ })
+
+ // 隐患查询搜索
+ //  $("#YHCXSSclick").click(function() {
+ //      console.log(111)
+ //          // var YHCXform = new FormData();
+ //      var formYHCX = $("#inspectionTaskForm_YHCX").serialize();
+ //      console.log(formYHCX)
+ //      $.ajax({
+ //          url: BASEURL + "/hidden/getHiddenByItem", //后台url
+ //          data: formYHCX,
+ //          cache: false,
+ //          async: false,
+ //          type: "GET", //类型，POST或者GET
+ //          dataType: 'json', //数据返回类型，可以是xml、json等
+ //          processData: false,
+ //          contentType: false,
+ //          success: function(msg) {
+ //              alert("提交成功！");
+ //          },
+ //          error: function(er) { //失败，回调函数
+ //              alert("预案附件不能为空");
+ //          }
+ //      });
+ //      layui.use('table', function() {
+ //          var table = layui.table;
+ //          table.reload("demoYHCX", {
+ //              //执行重载
+ //              url: BASEURL + "/hidden/getHiddenByItem",
+ //              where: formYHCX
+ //          })
+ //      })
+
+
+
+ //      $('.demoTable .layui-btn').on('click', function() {
+ //          var type = $(this).data('type');
+ //          active[type] ? active[type].call(this) : '';
+ //      });
+
+ //  });

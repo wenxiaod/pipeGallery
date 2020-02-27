@@ -28,11 +28,64 @@ layui.use(['form', 'layer', 'table'], function() {
         ],
         id: 'testReload',
         page: true,
-        limit: 10 //默认十条数据一页
-            ,
+        limit: 10, //默认十条数据一页
         limits: [10, 20, 30, 50] //数据分页条
-
     });
+    // 搜索-------------
+    var $ = layui.$,
+        active = {
+            reload: function() {
+                // 隐患标题：
+                var hiddenTitle_SS = $('#hiddenTitle_SS');
+                // 隐患类型：
+                var YHCX_xiala = $('#YHCX_xiala');
+                // 整改状态：
+                var YHCX_ZT = $('#YHCX_ZT');
+                // 应急审核：
+                var YHCX_YJSH = $('#YHCX_YJSH');
+                // 应急上报人：
+                var YHSBR_xiala = $('#YHSBR_xiala');
+                // 区域负责人：
+                var YHCX_QYFZR = $('#YHCX_QYFZR');
+                // 管廊：
+                var YHCX_GL = $('#YHCX_GL');
+                // 管轴：
+                var YHCX_GZ = $('#YHCX_GZ');
+                // 上报时间：
+                var timeStartYHCX = $('#timeStartYHCX');
+
+
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        hiddenTitle: hiddenTitle_SS.val(),
+                        hiddenType: YHCX_xiala.val(),
+                        rectificationStatus: YHCX_ZT.val(),
+                        auditToEmergency: YHCX_YJSH.val(),
+                        reporter: YHSBR_xiala.val(),
+                        areaManager: YHCX_QYFZR.val(),
+
+                        pipeGallery: YHCX_GL.val(),
+                        pipeAxle: YHCX_GZ.val(),
+                        reportDate: timeStartYHCX.val(),
+
+                    }
+                });
+            }
+        };
+
+    $('#YHCXSSclick').on('click', function() {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+
+
+
+
     table.render({
         elem: '#demoZRQY' //绑定table id
             ,
@@ -57,17 +110,19 @@ layui.use(['form', 'layer', 'table'], function() {
 
     });
 
+
+    // **隐患类型**//
     table.render({
         elem: '#demoYHLX' //绑定table id
             ,
-        url: '/Equipment/getEquipmentByItem' //数据请求路径，
+        url: BASEURL + "/hiddenType/getHiddenTypeByItem" //数据请求路径，
             ,
         cellMinWidth: 80,
         cols: [
             [
                 // 字段名根据实际情况更改
-                { field: 'title', title: '序号', width: 300, align: "center" },
-                { field: 'picture', title: '隐患类型名称', width: 500, align: "center" },
+                { field: 'id', title: '序号', width: 300, align: "center" },
+                { field: 'hiddenTypeName', title: '隐患类型名称', width: 500, align: "center" },
                 { fixed: 'right', align: 'center', title: '操作', toolbar: '#handleButtons', }
             ]
         ],
@@ -101,19 +156,20 @@ layui.use(['form', 'layer', 'table'], function() {
 
     });
 
+    // 班组管理
     table.render({
-        elem: '#demo4' //绑定table id
+        elem: '#demoBZGL' //绑定table id
             ,
-        url: '/Equipment/getEquipmentByItem' //数据请求路径，
+        url: BASEURL + "/crew/getCrewByItem" //数据请求路径，
             ,
         cellMinWidth: 80,
         cols: [
             [
                 // 字段名根据实际情况更改
-                { field: 'title', title: '班组名', align: "center" },
-                { field: 'picture', title: '负责人', align: "center" },
-                { field: 'title', title: '班组描述', align: "center" },
-                { field: 'picture', title: '创建时间', align: "center" },
+                { field: 'crewName', title: '班组名', align: "center" },
+                { field: 'creator', title: '负责人', align: "center" },
+                { field: 'crewDescription', title: '班组描述', align: "center" },
+                { field: 'createDate', title: '创建时间', align: "center" },
                 { fixed: 'right', align: 'center', title: '操作', toolbar: '#handleButtons', }
             ]
         ],
@@ -125,19 +181,19 @@ layui.use(['form', 'layer', 'table'], function() {
 
     });
     table.render({
-        elem: '#demo5' //绑定table id
+        elem: '#demoXJDCX' //绑定table id
             ,
-        url: '/Equipment/getEquipmentByItem' //数据请求路径，
+        url: BASEURL + '/patrol/getPatrolByItem' //数据请求路径，
             ,
         cellMinWidth: 80,
         cols: [
             [
                 // 字段名根据实际情况更改
-                { field: 'title', title: '巡点编号', align: "center" },
-                { field: 'picture', title: '巡点名称', align: "center" },
-                { field: 'title', title: '创建人', align: "center" },
-                { field: 'picture', title: '所属区域', align: "center" },
-                { field: 'title', title: '创建日期', align: "center" },
+                { field: 'id', title: '巡点编号', align: "center" },
+                { field: 'patrolName', title: '巡点名称', align: "center" },
+                { field: 'creator', title: '创建人', align: "center" },
+                { field: 'areaBelongs', title: '所属区域', align: "center" },
+                { field: 'createDate', title: '创建日期', align: "center" },
                 { fixed: 'right', align: 'center', title: '操作', toolbar: '#handleButtons' }
             ]
         ],
@@ -203,23 +259,19 @@ layui.use(['form', 'layer', 'table'], function() {
 
     // 指标管理
     table.render({
-        elem: '#ZBGL' //绑定table id
+        elem: '#demoZBGL' //绑定table id
             ,
-        url: '/Equipment/getEquipmentByItem' //数据请求路径，
+        url: BASEURL + '/indicator/getIndicatorByItem' //数据请求路径，
             ,
         cellMinWidth: 80,
         cols: [
             [
                 // 字段名根据实际情况更改
-                { field: 'title', title: '编号', align: "center" },
-                { field: 'picture', title: '标题', align: "center" },
-                { field: 'title', title: '创建人', align: "center" },
-                { field: 'picture', title: '执行人', align: "center" },
-                { field: 'title', title: '路线', align: "center" },
-                { field: 'picture', title: '状态', align: "center" },
-                { field: 'picture', title: '开始时间', align: "center" },
-                { field: 'title', title: '结束时间', align: "center" },
-                { field: 'picture', title: '审核意见', align: "center" },
+                { field: 'indicatorName', title: '指标名称', align: "center" },
+                { field: 'orderNumber', title: '序号', align: "center" },
+                { field: 'creator', title: '创建人', align: "center" },
+                { field: 'indicatorStatus', title: '状态', align: "center" },
+                { field: 'operateDate', title: '操作日期', align: "center" },
                 { fixed: 'right', align: 'center', title: '操作', toolbar: '#handleButtons', }
             ]
         ],
@@ -255,18 +307,18 @@ layui.use(['form', 'layer', 'table'], function() {
     });
     // 路线管理
     table.render({
-        elem: '#lu' //绑定table id
+        elem: '#demoXLGL' //绑定table id
             ,
-        url: '/Equipment/getEquipmentByItem' //数据请求路径，
+        url: BASEURL + '/itinerary/getItineraryByItem' //数据请求路径，
             ,
         cellMinWidth: 80,
         cols: [
             [
                 // 字段名根据实际情况更改
-                { field: 'title', title: '路线名称', align: "center" },
-                { field: 'picture', title: '创建人', align: "center" },
-                { field: 'title', title: '路线描述', align: "center" },
-                { field: 'title', title: '创建时间', align: "center" },
+                { field: 'itineraryName', title: '路线名称', align: "center" },
+                { field: 'creator', title: '创建人', align: "center" },
+                { field: 'itineraryDescription', title: '路线描述', align: "center" },
+                { field: 'createDate', title: '创建时间', align: "center" },
                 { fixed: 'right', align: 'center', title: '操作', toolbar: '#handleButtons', }
             ]
         ],
@@ -566,15 +618,15 @@ layui.use(['transfer', 'layer', 'util'], function() {
 
 });
 
-//Demo
+//数据提交
 layui.use('form', function() {
     var form = layui.form;
-
-    //监听提交
-    form.on('submit(formDemo)', function(data) {
-        layer.msg(JSON.stringify(data.field));
-        return false;
-    });
+    transfer = layui.transfer,
+        //监听提交
+        form.on('submit(formDemo)', function(data) {
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
     //定义标题及数据源
     transfer.render({
         elem: '#test2',

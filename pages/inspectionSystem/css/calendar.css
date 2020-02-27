@@ -14,7 +14,7 @@ li {
 }
 
 #calendar {
-    width: 600px;
+    width: 94%;
 }
 
 .calendar {
@@ -251,12 +251,10 @@ ul.events li {
 }
 
 ul.events li span {
-    margin-left: 5px;
+    margin-left: 30%;
 }
 
-ul.events li:before {
-    content: "☆ "
-}
+ul.events li:before {}
 
 
 /*scrollbar*/
